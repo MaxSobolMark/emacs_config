@@ -52,14 +52,13 @@
 
   ;; Installs packages
 
-  ;;
-
+;;
   ;; myPackages contains a list of package names
 
   (defvar myPackages
 
     '(
-
+      doom-themes
       )
 
     )
@@ -97,11 +96,51 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(ansi-color-faces-vector
+   [default default default italic underline success warning error])
+ '(ansi-color-names-vector
+   ["#002b36" "#dc322f" "#859900" "#b58900" "#268bd2" "#d33682" "#2aa198" "#839496"])
  '(company-tabnine-always-trigger t)
  '(custom-safe-themes
-   '("2c49d6ac8c0bf19648c9d2eabec9b246d46cb94d83713eaae4f26b49a8183fc4" "3df5335c36b40e417fec0392532c1b82b79114a05d5ade62cfe3de63a59bc5c6" "f94110b35f558e4c015b2c680f150bf8a19799d775f8352c957d9d1054b0a210" "e6ff132edb1bfa0645e2ba032c44ce94a3bd3c15e3929cdf6c049802cf059a2a" "76bfa9318742342233d8b0b42e824130b3a50dcc732866ff8e47366aed69de11" "c4bdbbd52c8e07112d1bfd00fee22bf0f25e727e95623ecb20c4fa098b74c1bd" "0a41da554c41c9169bdaba5745468608706c9046231bbbc0d155af1a12f32271" "4bca89c1004e24981c840d3a32755bf859a6910c65b829d9441814000cf6c3d0" "990e24b406787568c592db2b853aa65ecc2dcd08146c0d22293259d400174e37" default))
+   '("7a7b1d475b42c1a0b61f3b1d1225dd249ffa1abb1b7f726aec59ac7ca3bf4dae" "cf922a7a5c514fad79c483048257c5d8f242b21987af0db813d3f0b138dfaf53" "e8df30cd7fb42e56a4efc585540a2e63b0c6eeb9f4dc053373e05d774332fc13" "3d54650e34fa27561eb81fc3ceed504970cc553cfd37f46e8a80ec32254a3ec3" "6e14157d0c8857e81035e6c7131dc17e4115b3911c82a1fd32e528aec8e89eab" "f302eb9c73ead648aecdc1236952b1ceb02a3e7fcd064073fb391c840ef84bca" "2c49d6ac8c0bf19648c9d2eabec9b246d46cb94d83713eaae4f26b49a8183fc4" "3df5335c36b40e417fec0392532c1b82b79114a05d5ade62cfe3de63a59bc5c6" "f94110b35f558e4c015b2c680f150bf8a19799d775f8352c957d9d1054b0a210" "e6ff132edb1bfa0645e2ba032c44ce94a3bd3c15e3929cdf6c049802cf059a2a" "76bfa9318742342233d8b0b42e824130b3a50dcc732866ff8e47366aed69de11" "c4bdbbd52c8e07112d1bfd00fee22bf0f25e727e95623ecb20c4fa098b74c1bd" "0a41da554c41c9169bdaba5745468608706c9046231bbbc0d155af1a12f32271" "4bca89c1004e24981c840d3a32755bf859a6910c65b829d9441814000cf6c3d0" "990e24b406787568c592db2b853aa65ecc2dcd08146c0d22293259d400174e37" default))
+ '(exwm-floating-border-color "#011417")
+ '(fci-rule-color "#405A61")
+ '(highlight-tail-colors
+   ((("#0d3630" "#0f393a" "green")
+     . 0)
+    (("#04363f" "#073c4a" "brightcyan")
+     . 20)))
+ '(jdee-db-active-breakpoint-face-colors (cons "#073642" "#268bd2"))
+ '(jdee-db-requested-breakpoint-face-colors (cons "#073642" "#859900"))
+ '(jdee-db-spec-breakpoint-face-colors (cons "#073642" "#56697A"))
+ '(objed-cursor-color "#dc322f")
  '(package-selected-packages
-   '(ztree auctex ace-window multiple-cursors magit avy ivy projectile yasnippet-snippets company-tabnine pyenv-mode elpy smartparens company-jedi doom-themes spacemacs-theme company)))
+   '(yaml-mode ztree auctex ace-window multiple-cursors magit avy ivy projectile yasnippet-snippets company-tabnine pyenv-mode elpy smartparens company-jedi doom-themes spacemacs-theme company))
+ '(pdf-view-midnight-colors (cons "#839496" "#002b36"))
+ '(rustic-ansi-faces
+   ["#002b36" "#dc322f" "#859900" "#b58900" "#268bd2" "#d33682" "#2aa198" "#839496"])
+ '(vc-annotate-background "#002b36")
+ '(vc-annotate-color-map
+   (list
+    (cons 20 "#859900")
+    (cons 40 "#959300")
+    (cons 60 "#a58e00")
+    (cons 80 "#b58900")
+    (cons 100 "#bc7407")
+    (cons 120 "#c35f0e")
+    (cons 140 "#cb4b16")
+    (cons 160 "#cd4439")
+    (cons 180 "#d03d5d")
+    (cons 200 "#d33682")
+    (cons 220 "#d63466")
+    (cons 240 "#d9334a")
+    (cons 260 "#dc322f")
+    (cons 280 "#ba3f41")
+    (cons 300 "#994d54")
+    (cons 320 "#775b67")
+    (cons 340 "#405A61")
+    (cons 360 "#405A61")))
+ '(vc-annotate-very-old-color nil))
   
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -209,7 +248,7 @@
 
 (defun sshcs ()
   (interactive)
-  (find-file "/ssh:maxsobolmark@sc.stanford.edu:~/welcome.org")
+  (find-file "/ssh:maxsobolmark@sc.stanford.edu:/sailhome/maxsobolmark/mbrl-lib/mbrl/examples/main_lifelong_learning.py")
   )
 
 (setq visible-bell 1)
@@ -224,3 +263,12 @@
 
 (add-to-list 'load-path "~/.emacs.d/packages")
 (load "ediff-trees.el")
+
+(setq ztree-diff-filter-list '("^\\." ".?\.pyc$" ".?pycache.?"))
+
+(require 'yaml-mode)
+(add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode))
+
+(global-set-key (kbd "C-c M-c") 'copy-file)
+(global-set-key (kbd "C-c M-d") 'copy-directory)
+(global-set-key (kbd "C-c `") 'ediff-buffers)
