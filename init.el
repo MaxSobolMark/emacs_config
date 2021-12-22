@@ -115,7 +115,7 @@
  '(jdee-db-spec-breakpoint-face-colors (cons "#073642" "#56697A"))
  '(objed-cursor-color "#dc322f")
  '(package-selected-packages
-   '(yaml-mode ztree auctex ace-window multiple-cursors magit avy ivy projectile yasnippet-snippets company-tabnine pyenv-mode elpy smartparens company-jedi doom-themes spacemacs-theme company))
+   '(ein yaml-mode ztree auctex ace-window multiple-cursors magit avy ivy projectile yasnippet-snippets company-tabnine pyenv-mode elpy smartparens company-jedi doom-themes spacemacs-theme company))
  '(pdf-view-midnight-colors (cons "#839496" "#002b36"))
  '(rustic-ansi-faces
    ["#002b36" "#dc322f" "#859900" "#b58900" "#268bd2" "#d33682" "#2aa198" "#839496"])
@@ -272,3 +272,5 @@
 (global-set-key (kbd "C-c M-c") 'copy-file)
 (global-set-key (kbd "C-c M-d") 'copy-directory)
 (global-set-key (kbd "C-c `") 'ediff-buffers)
+
+(global-set-key (kbd "C-x p") 'ein:notebooklist-login)
