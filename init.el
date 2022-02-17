@@ -96,51 +96,18 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(TeX-engine 'xetex)
  '(ansi-color-faces-vector
    [default default default italic underline success warning error])
- '(ansi-color-names-vector
-   ["#002b36" "#dc322f" "#859900" "#b58900" "#268bd2" "#d33682" "#2aa198" "#839496"])
  '(company-tabnine-always-trigger t)
  '(custom-safe-themes
-   '("7a7b1d475b42c1a0b61f3b1d1225dd249ffa1abb1b7f726aec59ac7ca3bf4dae" "cf922a7a5c514fad79c483048257c5d8f242b21987af0db813d3f0b138dfaf53" "e8df30cd7fb42e56a4efc585540a2e63b0c6eeb9f4dc053373e05d774332fc13" "3d54650e34fa27561eb81fc3ceed504970cc553cfd37f46e8a80ec32254a3ec3" "6e14157d0c8857e81035e6c7131dc17e4115b3911c82a1fd32e528aec8e89eab" "f302eb9c73ead648aecdc1236952b1ceb02a3e7fcd064073fb391c840ef84bca" "2c49d6ac8c0bf19648c9d2eabec9b246d46cb94d83713eaae4f26b49a8183fc4" "3df5335c36b40e417fec0392532c1b82b79114a05d5ade62cfe3de63a59bc5c6" "f94110b35f558e4c015b2c680f150bf8a19799d775f8352c957d9d1054b0a210" "e6ff132edb1bfa0645e2ba032c44ce94a3bd3c15e3929cdf6c049802cf059a2a" "76bfa9318742342233d8b0b42e824130b3a50dcc732866ff8e47366aed69de11" "c4bdbbd52c8e07112d1bfd00fee22bf0f25e727e95623ecb20c4fa098b74c1bd" "0a41da554c41c9169bdaba5745468608706c9046231bbbc0d155af1a12f32271" "4bca89c1004e24981c840d3a32755bf859a6910c65b829d9441814000cf6c3d0" "990e24b406787568c592db2b853aa65ecc2dcd08146c0d22293259d400174e37" default))
- '(exwm-floating-border-color "#011417")
- '(fci-rule-color "#405A61")
- '(highlight-tail-colors
-   ((("#0d3630" "#0f393a" "green")
-     . 0)
-    (("#04363f" "#073c4a" "brightcyan")
-     . 20)))
- '(jdee-db-active-breakpoint-face-colors (cons "#073642" "#268bd2"))
- '(jdee-db-requested-breakpoint-face-colors (cons "#073642" "#859900"))
- '(jdee-db-spec-breakpoint-face-colors (cons "#073642" "#56697A"))
- '(objed-cursor-color "#dc322f")
+   '("1d5e33500bc9548f800f9e248b57d1b2a9ecde79cb40c0b1398dec51ee820daf" "7a7b1d475b42c1a0b61f3b1d1225dd249ffa1abb1b7f726aec59ac7ca3bf4dae" "cf922a7a5c514fad79c483048257c5d8f242b21987af0db813d3f0b138dfaf53" "e8df30cd7fb42e56a4efc585540a2e63b0c6eeb9f4dc053373e05d774332fc13" "3d54650e34fa27561eb81fc3ceed504970cc553cfd37f46e8a80ec32254a3ec3" "6e14157d0c8857e81035e6c7131dc17e4115b3911c82a1fd32e528aec8e89eab" "f302eb9c73ead648aecdc1236952b1ceb02a3e7fcd064073fb391c840ef84bca" "2c49d6ac8c0bf19648c9d2eabec9b246d46cb94d83713eaae4f26b49a8183fc4" "3df5335c36b40e417fec0392532c1b82b79114a05d5ade62cfe3de63a59bc5c6" "f94110b35f558e4c015b2c680f150bf8a19799d775f8352c957d9d1054b0a210" "e6ff132edb1bfa0645e2ba032c44ce94a3bd3c15e3929cdf6c049802cf059a2a" "76bfa9318742342233d8b0b42e824130b3a50dcc732866ff8e47366aed69de11" "c4bdbbd52c8e07112d1bfd00fee22bf0f25e727e95623ecb20c4fa098b74c1bd" "0a41da554c41c9169bdaba5745468608706c9046231bbbc0d155af1a12f32271" "4bca89c1004e24981c840d3a32755bf859a6910c65b829d9441814000cf6c3d0" "990e24b406787568c592db2b853aa65ecc2dcd08146c0d22293259d400174e37" default))
+ '(ein:output-area-inlined-images t)
+ '(latex-preview-pane-multifile-mode 'auctex)
  '(package-selected-packages
-   '(ein yaml-mode ztree auctex ace-window multiple-cursors magit avy ivy projectile yasnippet-snippets company-tabnine pyenv-mode elpy smartparens company-jedi doom-themes spacemacs-theme company))
- '(pdf-view-midnight-colors (cons "#839496" "#002b36"))
- '(rustic-ansi-faces
-   ["#002b36" "#dc322f" "#859900" "#b58900" "#268bd2" "#d33682" "#2aa198" "#839496"])
- '(vc-annotate-background "#002b36")
- '(vc-annotate-color-map
-   (list
-    (cons 20 "#859900")
-    (cons 40 "#959300")
-    (cons 60 "#a58e00")
-    (cons 80 "#b58900")
-    (cons 100 "#bc7407")
-    (cons 120 "#c35f0e")
-    (cons 140 "#cb4b16")
-    (cons 160 "#cd4439")
-    (cons 180 "#d03d5d")
-    (cons 200 "#d33682")
-    (cons 220 "#d63466")
-    (cons 240 "#d9334a")
-    (cons 260 "#dc322f")
-    (cons 280 "#ba3f41")
-    (cons 300 "#994d54")
-    (cons 320 "#775b67")
-    (cons 340 "#405A61")
-    (cons 360 "#405A61")))
- '(vc-annotate-very-old-color nil))
+   '(undo-tree company-auctex org-roam use-package latex-preview-pane hydra bash-completion ein yaml-mode ztree auctex ace-window multiple-cursors magit avy ivy projectile yasnippet-snippets company-tabnine pyenv-mode elpy smartparens company-jedi doom-themes spacemacs-theme company))
+ '(pdf-latex-command "lualatex")
+ '(shell-escape-mode "-shell-escape"))
   
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -157,6 +124,8 @@
 
   ;; Always start smartparens mode in python-mode
   (add-hook 'python-mode-hook #'smartparens-mode)
+  (add-hook 'LaTeX-mode-hook #'smartparens-mode)
+  (add-hook 'plain-tex-mode #'smartparens-mode)
 
   ;; Load theme
   (load-theme 'doom-dark+)
@@ -164,12 +133,11 @@
   (elpy-enable)
 (require 'pyvenv)
 
-(require 'company-tabnine)
-(add-to-list 'company-backends #'company-tabnine)
+;; (require 'company-tabnine)
+;; (add-to-list 'company-backends #'company-tabnine)
   
 (pyvenv-workon ".")
 
-(desktop-save-mode 1)
 
 ;; CUSTOM KEYBINDINGS:
 (global-set-key (kbd "C-x #") 'comment-line)
@@ -205,10 +173,10 @@
 (add-hook 'elpy-mode-hook (lambda ()
                             (add-hook 'before-save-hook
                                                                             'elpy-format-code nil t)))
-(require 'projectile)
-(define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
-(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
-(projectile-mode +1)
+;; (require 'projectile)
+;; (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
+;; (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+;; (projectile-mode +1)
 
 (defun move-line-down ()
   "Move down the current line."
@@ -224,8 +192,11 @@
   (transpose-lines 1)
   (forward-line -2)
   (indent-according-to-mode))
-(global-set-key (kbd "C-c i") 'move-line-up)
-(global-set-key (kbd "C-c o") 'move-line-down)
+
+(defhydra hydra-move-line (global-map "C-c")
+  "move-line"
+  ("i" move-line-up "up")
+  ("o" move-line-down "down"))
 
 (show-paren-mode 1)
 
@@ -241,9 +212,16 @@
 (menu-bar-mode -1)
 
 (require 'multiple-cursors)
+;; (defhydra hydra-mark-like-this (global-map "C-c")
+;;   "mark-like-this"
+;;   (")" mc/mark-next-like-this "mark next")
+;;   ("(" mc/mark-previous-like-this "mark previous")
+;;   ;; ("?" mc/mark-all-like-this "mark all"))
+;;   )
 (global-set-key (kbd "C-c )") 'mc/mark-next-like-this)
 (global-set-key (kbd "C-c (") 'mc/mark-previous-like-this)
-(global-set-key (kbd "C-c ?") 'mc/mark-all-like-this)
+(global-set-key (kbd "C-c C-0") 'mc/mark-next-lines)
+(global-set-key (kbd "C-c C-9") 'mc/mark-previous-lines)
 
 
 (defun sshcs ()
@@ -274,3 +252,87 @@
 (global-set-key (kbd "C-c `") 'ediff-buffers)
 
 (global-set-key (kbd "C-x p") 'ein:notebooklist-login)
+
+(autoload 'bash-completion-dynamic-complete
+  "bash-completion"
+  "BASH completion hook")
+(add-hook 'shell-dynamic-complete-functions
+          'bash-completion-dynamic-complete)
+
+(global-set-key (kbd "C-c /") 'comment-region)
+(global-set-key (kbd "C-c ?") 'uncomment-region)
+
+(menu-bar-mode -1)
+(tool-bar-mode -1)
+(toggle-scroll-bar -1)
+
+(autoload 'notmuch "notmuch" "Notmuch mail" t)
+
+(setq latex-run-command "pdflatex")
+(add-hook 'doc-view-mode-hook 'auto-revert-mode)
+(setq TeX-PDF-mode t)
+
+(add-hook 'LaTeX-mode-hook
+      (lambda()
+        (local-set-key [C-tab] 'TeX-complete-symbol)))
+
+(require 'org)
+(define-key global-map "\C-cl" 'org-store-link)
+(define-key global-map "\C-ca" 'org-agenda)
+(setq org-log-done t)
+(setq org-agenda-files '("~/max/org"))
+
+(use-package org-roam
+  :ensure t
+  :custom
+  (org-roam-directory (file-truename "~/max/RoamNotes"))
+  (org-roam-completion-everywhere t)
+  (org-roam-capture-templates
+   '(("d" "default" plain
+      "%?"
+      :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
+      :unnarrowed t)
+     ("p" "paper notes" plain (file "~/max/RoamNotes/org/Paper notes template.org")
+      :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
+      :unnarrowed t)
+     ("h" "person notes" plain (file "~/max/RoamNotes/org/Person notes template.org")
+      :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
+      :unnarrowed t)
+     )
+   )
+  :bind (("C-c n l" . org-roam-buffer-toggle)
+         ("C-c n f" . org-roam-node-find)
+         ("C-c n g" . org-roam-graph)
+         ("C-c n i" . org-roam-node-insert)
+         ("C-c n c" . org-roam-capture)
+         ;; Dailies
+         ("C-c n j" . org-roam-dailies-capture-today)
+         :map org-mode-map
+         ("C-M-i"   . completion-at-point))
+  :config
+  ;; If you're using a vertical completion framework, you might want a more informative completion interface
+  (setq org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
+  (org-roam-db-autosync-mode)
+  ;; If using org-roam-protocol
+  (require 'org-roam-protocol))
+
+(latex-preview-pane-enable)
+
+(ivy-mode)
+(setq ivy-re-builders-alist
+      '((org-roam-node-find . ivy--regex-ignore-order)
+        (t . ivy--regex-plus)))
+
+(add-to-list 'load-path "~/.emacs.d/elpa/company-auctex-20200529.1835/company-auctex.el")
+(require 'company-auctex)
+(company-auctex-init)
+(add-hook 'LaTeX-mode-hook 'company-mode)
+(add-hook 'plain-tex-mode 'company-mode)
+
+(global-undo-tree-mode)
+
+(global-visual-line-mode t)
+
+(with-eval-after-load 'smartparens
+  (sp-local-pair '(python-mode) "f\"" "\"")
+  (sp-local-pair '(python-mode) "f'" "'"))
