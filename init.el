@@ -1,3 +1,7 @@
+(setq mac-option-modifier 'super)
+(setq mac-command-modifier 'meta)
+(tool-bar-mode -1)
+
 ;; .emacs.d/init.el
 ;; Tab settings
 (setq-default indent-tabs-mode nil)
@@ -99,11 +103,23 @@
  '(TeX-engine 'xetex)
  '(ansi-color-faces-vector
    [default default default italic underline success warning error])
- '(company-tabnine-always-trigger t)
+ '(ansi-color-names-vector
+   ["#002b36" "#dc322f" "#859900" "#b58900" "#268bd2" "#d33682" "#2aa198" "#839496"])
  '(custom-safe-themes
    '("1d5e33500bc9548f800f9e248b57d1b2a9ecde79cb40c0b1398dec51ee820daf" "7a7b1d475b42c1a0b61f3b1d1225dd249ffa1abb1b7f726aec59ac7ca3bf4dae" "cf922a7a5c514fad79c483048257c5d8f242b21987af0db813d3f0b138dfaf53" "e8df30cd7fb42e56a4efc585540a2e63b0c6eeb9f4dc053373e05d774332fc13" "3d54650e34fa27561eb81fc3ceed504970cc553cfd37f46e8a80ec32254a3ec3" "6e14157d0c8857e81035e6c7131dc17e4115b3911c82a1fd32e528aec8e89eab" "f302eb9c73ead648aecdc1236952b1ceb02a3e7fcd064073fb391c840ef84bca" "2c49d6ac8c0bf19648c9d2eabec9b246d46cb94d83713eaae4f26b49a8183fc4" "3df5335c36b40e417fec0392532c1b82b79114a05d5ade62cfe3de63a59bc5c6" "f94110b35f558e4c015b2c680f150bf8a19799d775f8352c957d9d1054b0a210" "e6ff132edb1bfa0645e2ba032c44ce94a3bd3c15e3929cdf6c049802cf059a2a" "76bfa9318742342233d8b0b42e824130b3a50dcc732866ff8e47366aed69de11" "c4bdbbd52c8e07112d1bfd00fee22bf0f25e727e95623ecb20c4fa098b74c1bd" "0a41da554c41c9169bdaba5745468608706c9046231bbbc0d155af1a12f32271" "4bca89c1004e24981c840d3a32755bf859a6910c65b829d9441814000cf6c3d0" "990e24b406787568c592db2b853aa65ecc2dcd08146c0d22293259d400174e37" default))
  '(ein:output-area-inlined-images t)
  '(latex-preview-pane-multifile-mode 'auctex)
+ '(exwm-floating-border-color "#011417")
+ '(fci-rule-color "#405A61")
+ '(highlight-tail-colors
+   ((("#0d3630" "#0f393a" "green")
+     . 0)
+    (("#04363f" "#073c4a" "brightcyan")
+     . 20)))
+ '(jdee-db-active-breakpoint-face-colors (cons "#073642" "#268bd2"))
+ '(jdee-db-requested-breakpoint-face-colors (cons "#073642" "#859900"))
+ '(jdee-db-spec-breakpoint-face-colors (cons "#073642" "#56697A"))
+ '(objed-cursor-color "#dc322f")
  '(package-selected-packages
    '(undo-tree company-auctex org-roam use-package latex-preview-pane hydra bash-completion ein yaml-mode ztree auctex ace-window multiple-cursors magit avy ivy projectile yasnippet-snippets company-tabnine pyenv-mode elpy smartparens company-jedi doom-themes spacemacs-theme company))
  '(pdf-latex-command "lualatex")
@@ -173,10 +189,10 @@
 (add-hook 'elpy-mode-hook (lambda ()
                             (add-hook 'before-save-hook
                                                                             'elpy-format-code nil t)))
-;; (require 'projectile)
-;; (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
-;; (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
-;; (projectile-mode +1)
+(require 'projectile)
+(define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
+(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+(projectile-mode +1)
 
 (defun move-line-down ()
   "Move down the current line."
@@ -192,11 +208,8 @@
   (transpose-lines 1)
   (forward-line -2)
   (indent-according-to-mode))
-
-(defhydra hydra-move-line (global-map "C-c")
-  "move-line"
-  ("i" move-line-up "up")
-  ("o" move-line-down "down"))
+(global-set-key (kbd "C-c i") 'move-line-up)
+(global-set-key (kbd "C-c o") 'move-line-down)
 
 (show-paren-mode 1)
 
