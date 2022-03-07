@@ -1,6 +1,7 @@
 (setq mac-option-modifier 'super)
 (setq mac-command-modifier 'meta)
 (tool-bar-mode -1)
+(scroll-bar-mode -1)
 
 ;; .emacs.d/init.el
 ;; Tab settings
@@ -108,7 +109,6 @@
  '(custom-safe-themes
    '("1d5e33500bc9548f800f9e248b57d1b2a9ecde79cb40c0b1398dec51ee820daf" "7a7b1d475b42c1a0b61f3b1d1225dd249ffa1abb1b7f726aec59ac7ca3bf4dae" "cf922a7a5c514fad79c483048257c5d8f242b21987af0db813d3f0b138dfaf53" "e8df30cd7fb42e56a4efc585540a2e63b0c6eeb9f4dc053373e05d774332fc13" "3d54650e34fa27561eb81fc3ceed504970cc553cfd37f46e8a80ec32254a3ec3" "6e14157d0c8857e81035e6c7131dc17e4115b3911c82a1fd32e528aec8e89eab" "f302eb9c73ead648aecdc1236952b1ceb02a3e7fcd064073fb391c840ef84bca" "2c49d6ac8c0bf19648c9d2eabec9b246d46cb94d83713eaae4f26b49a8183fc4" "3df5335c36b40e417fec0392532c1b82b79114a05d5ade62cfe3de63a59bc5c6" "f94110b35f558e4c015b2c680f150bf8a19799d775f8352c957d9d1054b0a210" "e6ff132edb1bfa0645e2ba032c44ce94a3bd3c15e3929cdf6c049802cf059a2a" "76bfa9318742342233d8b0b42e824130b3a50dcc732866ff8e47366aed69de11" "c4bdbbd52c8e07112d1bfd00fee22bf0f25e727e95623ecb20c4fa098b74c1bd" "0a41da554c41c9169bdaba5745468608706c9046231bbbc0d155af1a12f32271" "4bca89c1004e24981c840d3a32755bf859a6910c65b829d9441814000cf6c3d0" "990e24b406787568c592db2b853aa65ecc2dcd08146c0d22293259d400174e37" default))
  '(ein:output-area-inlined-images t)
- '(latex-preview-pane-multifile-mode 'auctex)
  '(exwm-floating-border-color "#011417")
  '(fci-rule-color "#405A61")
  '(highlight-tail-colors
@@ -119,10 +119,15 @@
  '(jdee-db-active-breakpoint-face-colors (cons "#073642" "#268bd2"))
  '(jdee-db-requested-breakpoint-face-colors (cons "#073642" "#859900"))
  '(jdee-db-spec-breakpoint-face-colors (cons "#073642" "#56697A"))
+ '(latex-preview-pane-multifile-mode 'auctex)
  '(objed-cursor-color "#dc322f")
+ '(org-format-latex-options
+   '(:foreground default :background default :scale 1.5 :html-foreground "Black" :html-background "Transparent" :html-scale 1.0 :matchers
+                 ("begin" "$1" "$" "$$" "\\(" "\\[")))
  '(package-selected-packages
-   '(undo-tree company-auctex org-roam use-package latex-preview-pane hydra bash-completion ein yaml-mode ztree auctex ace-window multiple-cursors magit avy ivy projectile yasnippet-snippets company-tabnine pyenv-mode elpy smartparens company-jedi doom-themes spacemacs-theme company))
+   '(org-roam-ui cdlatex auctex-latexmk pdf-tools undo-tree company-auctex org-roam use-package latex-preview-pane hydra bash-completion ein yaml-mode ztree auctex ace-window multiple-cursors magit avy ivy projectile yasnippet-snippets company-tabnine pyenv-mode elpy smartparens company-jedi doom-themes spacemacs-theme company))
  '(pdf-latex-command "lualatex")
+ '(pyvenv-workon nil)
  '(shell-escape-mode "-shell-escape"))
   
 (custom-set-faces
@@ -138,10 +143,12 @@
 
   (add-hook 'python-mode-hook 'my/python-mode-hook)
 
-  ;; Always start smartparens mode in python-mode
-  (add-hook 'python-mode-hook #'smartparens-mode)
-  (add-hook 'LaTeX-mode-hook #'smartparens-mode)
-  (add-hook 'plain-tex-mode #'smartparens-mode)
+;; Always start smartparens mode in python-mode
+(add-hook 'python-mode-hook #'smartparens-mode)
+(add-hook 'LaTeX-mode-hook #'smartparens-mode)
+(add-hook 'plain-tex-mode #'smartparens-mode)
+(smartparens-global-mode t)
+
 
   ;; Load theme
   (load-theme 'doom-dark+)
@@ -208,8 +215,13 @@
   (transpose-lines 1)
   (forward-line -2)
   (indent-according-to-mode))
-(global-set-key (kbd "C-c i") 'move-line-up)
-(global-set-key (kbd "C-c o") 'move-line-down)
+;; (global-set-key (kbd "C-c i") 'move-line-up)
+;; (global-set-key (kbd "C-c o") 'move-line-down)
+(defhydra hydra-move-line (global-map "C-c")
+  "move-line"
+  ("i" move-line-up "up")
+  ("o" move-line-down "down"))
+
 
 (show-paren-mode 1)
 
@@ -239,7 +251,11 @@
 
 (defun sshcs ()
   (interactive)
-  (find-file "/ssh:maxsobolmark@sc.stanford.edu:/sailhome/maxsobolmark/mbrl-lib/mbrl/examples/main_lifelong_learning.py")
+  (find-file "/ssh:maxsobolmark@sc.stanford.edu:/")
+  )
+(defun initel ()
+  (interactive)
+  (find-file "~/.emacs.d/init.el")
   )
 
 (setq visible-bell 1)
@@ -293,22 +309,22 @@
 (define-key global-map "\C-cl" 'org-store-link)
 (define-key global-map "\C-ca" 'org-agenda)
 (setq org-log-done t)
-(setq org-agenda-files '("~/max/org"))
+(setq org-agenda-files '("~/org"))
 
 (use-package org-roam
   :ensure t
   :custom
-  (org-roam-directory (file-truename "~/max/RoamNotes"))
+  (org-roam-directory (file-truename "~/RoamNotes"))
   (org-roam-completion-everywhere t)
   (org-roam-capture-templates
-   '(("d" "default" plain
-      "%?"
+   '(("d" "default" plain "%?"
+      :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
+                         "#+title: ${title}\n#+STARTUP: latexpreview\n%^g")
+      :unnarrowed t)
+     ("p" "paper notes" plain (file "~/RoamNotes/org/Paper notes template.org")
       :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
       :unnarrowed t)
-     ("p" "paper notes" plain (file "~/max/RoamNotes/org/Paper notes template.org")
-      :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
-      :unnarrowed t)
-     ("h" "person notes" plain (file "~/max/RoamNotes/org/Person notes template.org")
+     ("h" "person notes" plain (file "~/RoamNotes/org/Person notes template.org")
       :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
       :unnarrowed t)
      )
@@ -341,6 +357,7 @@
 (company-auctex-init)
 (add-hook 'LaTeX-mode-hook 'company-mode)
 (add-hook 'plain-tex-mode 'company-mode)
+(add-hook 'org-mode-hook 'company-mode)
 
 (global-undo-tree-mode)
 
@@ -349,3 +366,58 @@
 (with-eval-after-load 'smartparens
   (sp-local-pair '(python-mode) "f\"" "\"")
   (sp-local-pair '(python-mode) "f'" "'"))
+
+(global-set-key (kbd "s-<tab>") 'other-frame)
+(setenv "PATH"
+        (concat "/Library/TeX/texbin/" ":" (getenv "PATH")))
+(setenv "PATH"
+        (concat "/opt/homebrew/bin/" ":" (getenv "PATH")))
+(setq exec-path (append exec-path '("/Library/TeX/texbin/")))
+(setq exec-path (append exec-path '("/opt/homebrew/bin/")))
+
+(setenv "WORKON_HOME" "~/dev/emacs_pyenv")
+(setenv "VIRTUAL_ENV" "~/dev/emacs_pyenv")
+
+(add-hook 'text-mode-hook #'auto-fill-mode)
+(add-hook 'python-mode-hook #'auto-fill-mode)
+(setq-default fill-column 100)
+
+(add-hook 'LaTeX-mode-hook 'turn-on-cdlatex)   ; with AUCTeX LaTeX mode
+(add-hook 'latex-mode-hook 'turn-on-cdlatex)   ; with Emacs latex mode
+(add-hook 'org-mode-hook 'turn-on-cdlatex)   ; with org mode
+
+
+(setq org-roam-ui-sync-theme t
+      org-roam-ui-follow t
+      org-roam-ui-update-on-save t
+      org-roam-ui-open-on-start t)
+; Set relative line numbers
+(global-display-line-numbers-mode)
+(setq display-line-numbers 'relative)
+(setq display-line-numbers-type 'relative)
+(global-linum-mode 0)
+
+(defun my-insert-before-line ()
+  (interactive)
+  ; Bring cursor to start of line (plus indentation)
+  (back-to-indentation)
+  ; Copy indentation
+  (set-mark (point))
+  (beginning-of-line)
+  (call-interactively #'kill-ring-save)
+  ; Add new line and indentation
+  (open-line 1)
+  (yank)
+  (rotate-yank-pointer 1))
+(global-set-key (kbd "C-o") 'my-insert-before-line)
+
+(defun copy-region-or-line ()
+  (interactive)
+  (save-excursion
+    (if (region-active-p)
+        (kill-ring-save nil nil t)  ; There's something selected, so just copy
+      (progn
+        (back-to-indentation) (set-mark (point)) (end-of-visual-line) (kill-ring-save nil nil t))
+      )
+    ))
+(global-set-key (kbd "M-w") 'copy-region-or-line)
