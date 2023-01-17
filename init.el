@@ -141,12 +141,14 @@
  '(copilot-node-executable "/Users/joelsobolmark/.nvm/versions/node/v17.9.1/bin/node")
  '(counsel-find-file-ignore-regexp "\\(?:\\‘[#.]\\)\\|\\(?:[#~]\\’\\)\\|\\(\\.~undo-tree~\\)$")
  '(custom-safe-themes
-   '("1d5e33500bc9548f800f9e248b57d1b2a9ecde79cb40c0b1398dec51ee820daf" "7a7b1d475b42c1a0b61f3b1d1225dd249ffa1abb1b7f726aec59ac7ca3bf4dae" "cf922a7a5c514fad79c483048257c5d8f242b21987af0db813d3f0b138dfaf53" "e8df30cd7fb42e56a4efc585540a2e63b0c6eeb9f4dc053373e05d774332fc13" "3d54650e34fa27561eb81fc3ceed504970cc553cfd37f46e8a80ec32254a3ec3" "6e14157d0c8857e81035e6c7131dc17e4115b3911c82a1fd32e528aec8e89eab" "f302eb9c73ead648aecdc1236952b1ceb02a3e7fcd064073fb391c840ef84bca" "2c49d6ac8c0bf19648c9d2eabec9b246d46cb94d83713eaae4f26b49a8183fc4" "3df5335c36b40e417fec0392532c1b82b79114a05d5ade62cfe3de63a59bc5c6" "f94110b35f558e4c015b2c680f150bf8a19799d775f8352c957d9d1054b0a210" "e6ff132edb1bfa0645e2ba032c44ce94a3bd3c15e3929cdf6c049802cf059a2a" "76bfa9318742342233d8b0b42e824130b3a50dcc732866ff8e47366aed69de11" "c4bdbbd52c8e07112d1bfd00fee22bf0f25e727e95623ecb20c4fa098b74c1bd" "0a41da554c41c9169bdaba5745468608706c9046231bbbc0d155af1a12f32271" "4bca89c1004e24981c840d3a32755bf859a6910c65b829d9441814000cf6c3d0" "990e24b406787568c592db2b853aa65ecc2dcd08146c0d22293259d400174e37" default))
+   '("aec7b55f2a13307a55517fdf08438863d694550565dee23181d2ebd973ebd6b8" "1d5e33500bc9548f800f9e248b57d1b2a9ecde79cb40c0b1398dec51ee820daf" "7a7b1d475b42c1a0b61f3b1d1225dd249ffa1abb1b7f726aec59ac7ca3bf4dae" "cf922a7a5c514fad79c483048257c5d8f242b21987af0db813d3f0b138dfaf53" "e8df30cd7fb42e56a4efc585540a2e63b0c6eeb9f4dc053373e05d774332fc13" "3d54650e34fa27561eb81fc3ceed504970cc553cfd37f46e8a80ec32254a3ec3" "6e14157d0c8857e81035e6c7131dc17e4115b3911c82a1fd32e528aec8e89eab" "f302eb9c73ead648aecdc1236952b1ceb02a3e7fcd064073fb391c840ef84bca" "2c49d6ac8c0bf19648c9d2eabec9b246d46cb94d83713eaae4f26b49a8183fc4" "3df5335c36b40e417fec0392532c1b82b79114a05d5ade62cfe3de63a59bc5c6" "f94110b35f558e4c015b2c680f150bf8a19799d775f8352c957d9d1054b0a210" "e6ff132edb1bfa0645e2ba032c44ce94a3bd3c15e3929cdf6c049802cf059a2a" "76bfa9318742342233d8b0b42e824130b3a50dcc732866ff8e47366aed69de11" "c4bdbbd52c8e07112d1bfd00fee22bf0f25e727e95623ecb20c4fa098b74c1bd" "0a41da554c41c9169bdaba5745468608706c9046231bbbc0d155af1a12f32271" "4bca89c1004e24981c840d3a32755bf859a6910c65b829d9441814000cf6c3d0" "990e24b406787568c592db2b853aa65ecc2dcd08146c0d22293259d400174e37" default))
  '(debug-on-error nil)
  '(debug-on-signal nil)
  '(ein:output-area-inlined-images t)
  '(exwm-floating-border-color "#011417")
  '(fci-rule-color "#405A61")
+ '(global-display-line-numbers-mode t)
+ '(global-linum-mode nil)
  '(highlight-tail-colors
    ((("#0d3630" "#0f393a" "green")
      . 0)
@@ -168,6 +170,7 @@
  '(jdee-db-spec-breakpoint-face-colors (cons "#073642" "#56697A"))
  '(jedi:environment-virtualenv '("~/miniconda3/bin/virtualenv"))
  '(latex-preview-pane-multifile-mode 'auctex)
+ '(ns-right-alternate-modifier 'control)
  '(objed-cursor-color "#dc322f")
  '(org-format-latex-options
    '(:foreground default :background default :scale 1.5 :html-foreground "Black" :html-background "Transparent" :html-scale 1.0 :matchers
@@ -177,6 +180,7 @@
    '(diminish slack el-get request-deferred oauth2 circe alert restart-emacs add-node-modules-path prettier-js flycheck dashboard apheleia tree-sitter jedi diff-hl counsel-tramp counsel helm-dash helm cdlatex auctex-latexmk undo-tree company-auctex latex-preview-pane bash-completion ein ztree auctex ace-window avy yasnippet-snippets company-tabnine pyenv-mode elpy company-jedi doom-themes spacemacs-theme company))
  '(pdf-latex-command "lualatex")
  '(prettify-symbols-unprettify-at-point 'right-edge)
+ '(projectile-enable-caching t)
  '(pyvenv-activate "~/dev/emacs_pyenv_3.9")
  '(pyvenv-workon nil)
  '(set-mark-command-repeat-pop t)
@@ -337,11 +341,15 @@
 
 (defun sshcs ()
   (interactive)
+  ;; Disable projectile-mode for this buffer
+  (projectile-mode -1)
   (find-file "/ssh:maxsobolmark@sc.stanford.edu:/")
   )
 (defun sshcs-reconnect ()
   (interactive)
   (tramp-cleanup-all-connections)
+  ;; Disable projectile-mode for this buffer
+  (projectile-mode -1)
   (find-file "/ssh:maxsobolmark@sc.stanford.edu:/")
   )
 (defun sshws ()
@@ -350,6 +358,10 @@
 (defun initel ()
   (interactive)
   (find-file "~/.emacs.d/init.el")
+  )
+(defun mebatch-history ()
+  (interactive)
+  (find-file "/ssh:maxsobolmark@sc.stanford.edu:/iris/u/maxsobolmark/mebatch/mebatch_history.txt")
   )
 
 (setq visible-bell 1)
@@ -550,8 +562,13 @@
 (use-package lsp-pyright
   :ensure t
   :hook (python-mode . (lambda ()
-                          (require 'lsp-pyright)
-                          (lsp))))  ; or lsp-deferred
+                         (if (file-remote-p default-directory)
+                                        ; Disable lsp-mode in remote buffers
+                             (lsp-mode -1)
+                                        ; Enable lsp-mode in local buffers
+                           (lambda ()
+                             (require 'lsp-pyright)
+                                (lsp))))))
 
 ;; (lsp-register-client
 ;;     (make-lsp-client :new-connection (lsp-tramp-connection (lambda ()
@@ -678,10 +695,10 @@ same directory as the org-buffer and insert a link to this file."
 ;; Counsel config
 (global-set-key (kbd "M-x") 'counsel-M-x)
 (global-set-key (kbd "C-x C-f") 'counsel-find-file)
-(global-set-key (kbd "<f1> f") 'counsel-describe-function)
-(global-set-key (kbd "<f1> v") 'counsel-describe-variable)
-(global-set-key (kbd "<f1> o") 'counsel-describe-symbol)
-(global-set-key (kbd "<f1> l") 'counsel-find-library)
+;; (global-set-key (kbd "<f1> f") 'counsel-describe-function)
+;; (global-set-key (kbd "<f1> v") 'counsel-describe-variable)
+;; (global-set-key (kbd "<f1> o") 'counsel-describe-symbol)
+;; (global-set-key (kbd "<f1> l") 'counsel-find-library)
 ;; (global-set-key (kbd "<f2> i") 'counsel-info-lookup-symbol)
 ;; (global-set-key (kbd "<f2> u") 'counsel-unicode-char)
 (global-set-key (kbd "C-c g") 'counsel-git)
@@ -912,6 +929,8 @@ same directory as the org-buffer and insert a link to this file."
 
 (global-set-key (kbd "C-|") (lambda () (interactive) (python-selection)))
 
+(global-unset-key (kbd "<f1>"))
+(global-set-key (kbd "<f1>") 'delete-other-windows)
 (global-set-key (kbd "<f3>") (lambda () (interactive)
                                (progn
                                  (split-window-right)
@@ -922,18 +941,29 @@ same directory as the org-buffer and insert a link to this file."
                                  (split-window-below)
                                  (other-window 1)
                                  )))
+(global-set-key (kbd "<f10>") 'delete-window)
 
+;; (global-unset-key (kbd "<f1>"))
 (use-package copilot
   :straight (:host github :repo "zerolfx/copilot.el" :files ("dist" "*.el"))
   :ensure t)
 (add-hook 'prog-mode-hook 'copilot-mode)
-(global-set-key (kbd "<f4>") 'copilot-complete)
+;; (global-set-key (kbd "<f1>") 'copilot-complete)
 (global-set-key (kbd "<f5>") 'copilot-next-completion)
 (global-set-key (kbd "<f6>") 'copilot-clear-overlay)
 (with-eval-after-load 'company
   ;; disable inline previews
   (delq 'company-preview-if-just-one-frontend company-frontends))
 (define-key copilot-completion-map (kbd "<tab>") 'copilot-accept-completion)
-(define-key copilot-completion-map (kbd "<f4>") 'copilot-accept-completion)
+;; (define-key copilot-completion-map (kbd "<f1>") 'copilot-accept-completion)
 (define-key copilot-completion-map (kbd "TAB") 'copilot-accept-completion)
-(define-key copilot-completion-map (kbd "<f4>") 'copilot-accept-completion)
+;; (define-key copilot-completion-map (kbd "<f1>") 'copilot-accept-completion)
+(define-key copilot-completion-map (kbd "C-g") 'copilot-clear-overlay)
+(defhydra hydra-copilot-accept (global-map "M-\\")
+  "copilot-accept"
+  ("\\" copilot-accept-completion "accept")
+  ("c" copilot-complete "complete")
+  ("f" copilot-accept-completion-by-word "accept word completion")
+  ("n" copilot-accept-completion-by-line "accept line completion"))
+
+(global-unset-key (kbd "C-z"))
