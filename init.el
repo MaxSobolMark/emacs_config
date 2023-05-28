@@ -133,7 +133,77 @@
      (ocamlformat "ocamlformat" "-" "--name" filepath "--enable-outside-detected-project")
      (prettier npx "/Users/joelsobolmark/dev/node_modules/.bin/prettier" "--stdin-filepath" filepath)
      (rustfmt "rustfmt" "--quiet" "--emit" "stdout")
-     (terraform "terraform" "fmt" "-")))
+     (terraform "terraform" "fmt" "-")
+     (prettier-yaml "npx" "prettier" "--stdin-filepath" filepath "--parser=yaml")))
+ '(apheleia-mode-alist
+   '((php-mode . phpcs)
+     (json-mode . prettier-json)
+     (json-ts-mode . prettier-json)
+     (asm-mode . asmfmt)
+     (awk-mode . gawk)
+     (bash-ts-mode . shfmt)
+     (bazel-mode . buildifier)
+     (beancount-mode . bean-format)
+     (c++-ts-mode . clang-format)
+     (caddyfile-mode . caddyfmt)
+     (cc-mode . clang-format)
+     (c-mode . clang-format)
+     (c-ts-mode . clang-format)
+     (c++-mode . clang-format)
+     (caml-mode . ocamlformat)
+     (cmake-mode . cmake-format)
+     (cmake-ts-mode . cmake-format)
+     (common-lisp-mode . lisp-indent)
+     (crystal-mode . crystal-tool-format)
+     (css-mode . prettier-css)
+     (css-ts-mode . prettier-css)
+     (dart-mode . dart-format)
+     (dart-ts-mode . dart-format)
+     (elixir-mode . mix-format)
+     (elixir-ts-mode . mix-format)
+     (elm-mode . elm-format)
+     (fish-mode . fish-indent)
+     (go-mode . gofmt)
+     (go-mod-ts-mode . gofmt)
+     (go-ts-mode . gofmt)
+     (graphql-mode . prettier-graphql)
+     (haskell-mode . brittany)
+     (html-mode . prettier-html)
+     (html-ts-mode . prettier-html)
+     (java-mode . google-java-format)
+     (java-ts-mode . google-java-format)
+     (js3-mode . prettier-javascript)
+     (js-mode . prettier-javascript)
+     (js-ts-mode . prettier-javascript)
+     (kotlin-mode . ktlint)
+     (latex-mode . latexindent)
+     (LaTeX-mode . latexindent)
+     (lua-mode . stylua)
+     (lisp-mode . lisp-indent)
+     (nasm-mode . asmfmt)
+     (nix-mode . nixfmt)
+     (perl-mode . perltidy)
+     (purescript-mode . purs-tidy)
+     (python-mode . black)
+     (python-ts-mode . black)
+     (ruby-mode . prettier-ruby)
+     (ruby-ts-mode . prettier-ruby)
+     (rustic-mode . rustfmt)
+     (rust-mode . rustfmt)
+     (rust-ts-mode . rustfmt)
+     (scss-mode . prettier-scss)
+     (svelte-mode . prettier-svelte)
+     (terraform-mode . terraform)
+     (TeX-latex-mode . latexindent)
+     (TeX-mode . latexindent)
+     (tsx-ts-mode . prettier-typescript)
+     (tuareg-mode . ocamlformat)
+     (typescript-mode . prettier-typescript)
+     (typescript-ts-mode . prettier-typescript)
+     (web-mode . prettier)
+     (yaml-mode . prettier-yaml)
+     (yaml-ts-mode . prettier-yaml)
+     (emacs-lisp-mode . lisp-indent)))
  '(apheleia-remote-algorithm 'local)
  '(avy-enter-times-out nil)
  '(avy-timeout-seconds 0.2)
@@ -147,6 +217,7 @@
  '(ein:output-area-inlined-images t)
  '(exwm-floating-border-color "#011417")
  '(fci-rule-color "#405A61")
+ '(flycheck-flake8-maximum-line-length 99)
  '(global-display-line-numbers-mode t)
  '(global-linum-mode nil)
  '(highlight-tail-colors
@@ -181,16 +252,20 @@
  '(pdf-latex-command "lualatex")
  '(prettify-symbols-unprettify-at-point 'right-edge)
  '(projectile-enable-caching t)
+ '(python-indent-guess-indent-offset nil)
  '(pyvenv-activate "~/dev/emacs_pyenv_3.9")
  '(pyvenv-workon nil)
+ '(remote-file-name-inhibit-cache 600)
  '(set-mark-command-repeat-pop t)
  '(shell-escape-mode "-shell-escape")
+ '(shell-file-name "/bin/zsh")
  '(tab-width 4)
  '(tramp-connection-timeout 25)
  '(tramp-remote-path
    '(tramp-default-remote-path "/bin" "/usr/bin" "/sbin" "/usr/sbin" "/usr/local/bin" "/usr/local/sbin" "/local/bin" "/local/freeware/bin" "/local/gnu/bin" "/usr/freeware/bin" "/usr/pkg/bin" "/usr/contrib/bin" "/opt/bin" "/opt/sbin" "/opt/local/bin" "/sailhome/maxsobolmark/defaultenv/bin"))
- '(tramp-verbose 3)
+ '(tramp-verbose 1)
  '(undo-tree-auto-save-history nil)
+ '(vc-handled-backends '(Git))
  '(warning-suppress-types '((pdf-view))))
   
 (custom-set-faces
@@ -343,7 +418,7 @@
   (interactive)
   ;; Disable projectile-mode for this buffer
   (projectile-mode -1)
-  (find-file "/ssh:maxsobolmark@sc.stanford.edu:/")
+  (find-file "/ssh:maxsobolmark@sc.stanford.edu:/iris/u/maxsobolmark")
   )
 (defun sshcs-reconnect ()
   (interactive)
@@ -354,7 +429,7 @@
   )
 (defun sshws ()
   (interactive)
-  (find-file "/ssh:maxsobolmark@iris-ws-7.stanford.edu:/"))
+  (find-file "/ssh:maxsobolmark@iris-ws-10.stanford.edu:/"))
 (defun initel ()
   (interactive)
   (find-file "~/.emacs.d/init.el")
@@ -362,6 +437,10 @@
 (defun mebatch-history ()
   (interactive)
   (find-file "/ssh:maxsobolmark@sc.stanford.edu:/iris/u/maxsobolmark/mebatch/mebatch_history.txt")
+  )
+(defun bashrc ()
+  (interactive)
+  (find-file "/ssh:maxsobolmark@sc.stanford.edu:~/.bashrc")
   )
 
 (setq visible-bell 1)
@@ -568,7 +647,13 @@
                                         ; Enable lsp-mode in local buffers
                            (lambda ()
                              (require 'lsp-pyright)
-                                (lsp))))))
+                             (lsp)))))
+  :init (when (executable-find "python3")
+          (setq lsp-pyright-python-executable-cmd "python3")))
+
+(use-package lsp-ui
+  :commands lsp-ui-mode)
+
 
 ;; (lsp-register-client
 ;;     (make-lsp-client :new-connection (lsp-tramp-connection (lambda ()
@@ -596,8 +681,20 @@
 ;; (add-hook 'lsp-mode-hook 'lsp-headerline--disable-breadcrumb)
 (setq lsp-headerline-breadcrumb-enable nil)
 
-(global-set-key (kbd "M-n") 'avy-goto-char)
+;; Define function avy-temporary-all-frames that if called with C-u, will
+;; temporarily enable avy-all-windows and call avy-goto-char-timer. If called without a
+;; prefix argument, will call avy-goto-char-timer.
+;; (defun avy-temporary-all-frames (&optional prefix)
+;;   (interactive)
+;;   (if (equal current-prefix-arg '(4))
+;;       (progn
+;;         (setq avy-all-windows 't)
+;;         (call-interactively #'avy-goto-char)
+;;         (message "test")
+;;         (setq avy-all-windows nil))
+;;     (call-interactively #'avy-goto-char)))
 (global-set-key (kbd "<escape>") 'avy-goto-char)
+;; (global-set-key (kbd "<escape>") 'avy-temporary-all-frames)
 ;; (global-set-key (kbd "M-n") 'avy-goto-char-2)
 
 (global-set-key (kbd "C-s") 'swiper-isearch)
@@ -884,7 +981,8 @@ same directory as the org-buffer and insert a link to this file."
 ;;   :init
 ;;   (setq alert-default-style 'notifier))
 
-(setq avy-all-windows 'all-frames)
+;; (setq avy-all-windows 'all-frames)
+(setq avy-all-windows t)
 
 (global-set-key (kbd "C-x O") (lambda () (interactive) (other-window -1)))
 
@@ -907,25 +1005,41 @@ same directory as the org-buffer and insert a link to this file."
   (message "Cleared the kill ring.")
   )
 
+;; (defun python-selection()
+;;   (interactive)
+;;   (if (use-region-p)
+;;       (progn
+;;         (setq s (region-beginning))
+;;         (setq e (region-end))
+;;         (goto-char (region-beginning))
+;;         (insert "print(")
+;;         (goto-char (region-end))
+;;         (insert ")")
+;;         (deactivate-mark)
+;;         (set-mark (point))
+;;         (backward-sexp)
+;;         (backward-sexp)
+;;         (setq current-prefix-arg '(4)) ; C-u
+;;         (shell-command-on-region (region-beginning) (region-end) "python" nil t)
+;;         (end-of-visual-line)
+;;         (delete-char 1)
+;;                                         ;(message "Done")
+;;         )
+;;     (message "Nothing selected"))
+;;   )
+
 (defun python-selection()
   (interactive)
   (if (use-region-p)
       (progn
-        (setq s (region-beginning))
-        (setq e (region-end))
-        (goto-char (region-beginning))
-        (insert "print(")
-        (goto-char (region-end))
-        (insert ")")
-        (deactivate-mark)
-        (set-mark (point))
-        (backward-sexp)
-        (backward-sexp)
+        (kill-region (region-beginning) (region-end))
         (setq current-prefix-arg '(4)) ; C-u
-        (shell-command-on-region (region-beginning) (region-end) "python" nil t)
-        (message "Done"))
+        (shell-command (format "python -c 'print(%s)'" (car kill-ring)) t)
+        (end-of-visual-line)
+        (delete-char 1)
+        )
     (message "Nothing selected"))
-  )
+    )
 
 (global-set-key (kbd "C-|") (lambda () (interactive) (python-selection)))
 
@@ -967,3 +1081,36 @@ same directory as the org-buffer and insert a link to this file."
   ("n" copilot-accept-completion-by-line "accept line completion"))
 
 (global-unset-key (kbd "C-z"))
+
+;; ;; Create a C-M-c shortcut for copying to kill the current file name
+;; (defun copy-file-name-to-kill-ring ()
+;;   "Copy the current buffer file name to the kill ring."
+;;   (interactive)
+;;   (kill-new (buffer-file-name))
+;;   ;; remove the tramp part, anything before the first :
+  
+;;   /ssh:maxsobolmark@sc.stanford.edu:/iris/u/maxsobolmark/decoupled_iql/dataset_utils.py
+;;   (if (equal current-prefix-arg '(4))
+;;       ;; C-u prefix, copy 
+
+;;   (message (buffer-file-name)))
+
+
+;; (global-set-key (kbd "C-M-c") 'copy-file-name-to-kill-ring)
+
+;; Disable copilot-mode on the scratch buffer:
+(add-hook 'after-change-major-mode-hook
+          (lambda ()
+            (when (string= (buffer-name) "*scratch*")
+              (copilot-mode -1))))
+(pixel-scroll-precision-mode)
+
+(persistent-scratch-setup-default)
+(put 'narrow-to-region 'disabled nil)
+
+(autoload 'conda
+  "Conda"
+  "Conda")
+(add-hook 'eshell-mode-hook
+          '(conda-env-initialize-eshell)
+          )
