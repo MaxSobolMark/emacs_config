@@ -24,7 +24,7 @@
 (setq-default c-basic-offset 4)
 
 ;; Show line numbers
-(global-linum-mode t)
+;; (global-linum-mode t)
 
 ;; mouse commands
 (require 'mouse)
@@ -95,6 +95,9 @@
 
 	myPackages)
 
+;; Garbage collection magic hack
+(require 'gcmh)
+(gcmh-mode 1)
 
   ;; ===================================
 
@@ -105,7 +108,7 @@
 
   (setq inhibit-startup-message t)    ;; Hide the startup message
 
-  (global-linum-mode t)               ;; Enable line numbers globally
+  ;; (global-linum-mode t)               ;; Enable line numbers globally
 
 
   ;; User-Defined init.el ends here
@@ -219,7 +222,7 @@
  '(fci-rule-color "#405A61")
  '(flycheck-flake8-maximum-line-length 99)
  '(global-display-line-numbers-mode t)
- '(global-linum-mode nil)
+ ;;'(global-linum-mode nil)
  '(highlight-tail-colors
    ((("#0d3630" "#0f393a" "green")
      . 0)
@@ -425,7 +428,7 @@
   (tramp-cleanup-all-connections)
   ;; Disable projectile-mode for this buffer
   (projectile-mode -1)
-  (find-file "/ssh:maxsobolmark@sc.stanford.edu:/")
+  (find-file "/ssh:maxsobolmark@sc.stanford.edu:/iris/u/maxsobolmark")
   )
 (defun sshws ()
   (interactive)
@@ -562,7 +565,8 @@
   (sp-local-pair '(python-mode) "f\"" "\"")
   (sp-local-pair '(python-mode) "f'" "'"))
 
-(global-set-key (kbd "s-<tab>") 'other-frame)
+(global-set-key (kbd "S-<tab>") 'other-window)
+(global-set-key (kbd "C-<tab>") 'ivy-switch-buffer)
 (setenv "PATH"
         (concat "/Library/TeX/texbin/" ":" (getenv "PATH")))
 (setenv "PATH"
@@ -981,8 +985,8 @@ same directory as the org-buffer and insert a link to this file."
 ;;   :init
 ;;   (setq alert-default-style 'notifier))
 
-;; (setq avy-all-windows 'all-frames)
-(setq avy-all-windows t)
+(setq avy-all-windows 'all-frames)
+;; (setq avy-all-windows t)
 
 (global-set-key (kbd "C-x O") (lambda () (interactive) (other-window -1)))
 
@@ -1114,3 +1118,39 @@ same directory as the org-buffer and insert a link to this file."
 (add-hook 'eshell-mode-hook
           '(conda-env-initialize-eshell)
           )
+
+(defun change-volume (delta)
+  "Change the volume by DELTA."
+  (interactive)
+  ;; First we need to get the current volume
+  ;; Use osascript
+  ;; For reference, the output looks like this: output volume:31, input volume:53, alert volume:100, output muted:false
+  (setq current-volume (string-to-number (string-trim (shell-command-to-string "osascript -e 'get volume settings' | awk -F '[:,]' '{print $2}'"))))
+  (setq new-volume (+ current-volume delta))
+    (if (> new-volume 100)
+        (setq new-volume 100)
+      )
+    (if (< new-volume 0)
+        (setq new-volume 0)
+      )
+    (shell-command-to-string (format "osascript -e 'set volume output volume %s'" new-volume))
+    (message (format "Volume: %s" new-volume))
+    )
+
+(defun volume-up ()
+    "Increase the volume by 10."
+    (interactive)
+    (change-volume 10)
+    )
+
+(defun volume-down ()
+    "Decrease the volume by 10."
+    (interactive)
+    (change-volume -10)
+    )
+
+(global-set-key (kbd "<f11>") 'volume-down)
+(global-set-key (kbd "<f12>") 'volume-up)
+
+;; (require 'key-chord)
+;; (key-chord-mode 1)
