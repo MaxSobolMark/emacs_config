@@ -55,7 +55,7 @@
 
 (add-to-list 'package-archives
 
-	     '("melpa-stable" . "http://melpa.org/packages/") t)
+	         '("melpa-stable" . "http://melpa.org/packages/") t)
 
 
 ;; Initializes the package infrastructure
@@ -69,50 +69,52 @@
 
   (package-refresh-contents))
 
-  ;; Installs packages
+;; Installs packages
 
 ;;
-  ;; myPackages contains a list of package names
+;; myPackages contains a list of package names
 
-  (defvar myPackages
+(defvar myPackages
 
-    '(
-      doom-themes
-      )
-
+  '(
+    doom-themes
+    async
     )
 
+  )
 
-  ;; Scans the list in myPackages
 
-  ;; If the package listed is not already installed, install it
+;; Scans the list in myPackages
 
-  (mapc #'(lambda (package)
+;; If the package listed is not already installed, install it
 
-	    (unless (package-installed-p package)
+(mapc #'(lambda (package)
 
-	      (package-install package)))
+	      (unless (package-installed-p package)
 
-	myPackages)
+	        (package-install package)))
+
+	  myPackages)
 
 ;; Garbage collection magic hack
 (require 'gcmh)
 (gcmh-mode 1)
 
-  ;; ===================================
 
-  ;; Basic Customization
+;; ===================================
 
-  ;; ===================================
+;; Basic Customization
 
-
-  (setq inhibit-startup-message t)    ;; Hide the startup message
-
-  ;; (global-linum-mode t)               ;; Enable line numbers globally
+;; ===================================
 
 
-  ;; User-Defined init.el ends here
-  
+(setq inhibit-startup-message t)    ;; Hide the startup message
+
+;; (global-linum-mode t)               ;; Enable line numbers globally
+
+
+;; User-Defined init.el ends here
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -123,21 +125,6 @@
    [default default default italic underline success warning error])
  '(ansi-color-names-vector
    ["#002b36" "#dc322f" "#859900" "#b58900" "#268bd2" "#d33682" "#2aa198" "#839496"])
- '(apheleia-formatters
-   '((black "black" "-")
-     (brittany "brittany")
-     (clang-format "clang-format")
-     (fish-indent "fish_indent")
-     (gofmt "gofmt")
-     (google-java-format "google-java-format" "-")
-     (isort "isort" "-")
-     (latexindent "latexindent")
-     (mix-format "mix" "format" "-")
-     (ocamlformat "ocamlformat" "-" "--name" filepath "--enable-outside-detected-project")
-     (prettier npx "/Users/joelsobolmark/dev/node_modules/.bin/prettier" "--stdin-filepath" filepath)
-     (rustfmt "rustfmt" "--quiet" "--emit" "stdout")
-     (terraform "terraform" "fmt" "-")
-     (prettier-yaml "npx" "prettier" "--stdin-filepath" filepath "--parser=yaml")))
  '(apheleia-mode-alist
    '((php-mode . phpcs)
      (json-mode . prettier-json)
@@ -216,13 +203,14 @@
  '(custom-safe-themes
    '("aec7b55f2a13307a55517fdf08438863d694550565dee23181d2ebd973ebd6b8" "1d5e33500bc9548f800f9e248b57d1b2a9ecde79cb40c0b1398dec51ee820daf" "7a7b1d475b42c1a0b61f3b1d1225dd249ffa1abb1b7f726aec59ac7ca3bf4dae" "cf922a7a5c514fad79c483048257c5d8f242b21987af0db813d3f0b138dfaf53" "e8df30cd7fb42e56a4efc585540a2e63b0c6eeb9f4dc053373e05d774332fc13" "3d54650e34fa27561eb81fc3ceed504970cc553cfd37f46e8a80ec32254a3ec3" "6e14157d0c8857e81035e6c7131dc17e4115b3911c82a1fd32e528aec8e89eab" "f302eb9c73ead648aecdc1236952b1ceb02a3e7fcd064073fb391c840ef84bca" "2c49d6ac8c0bf19648c9d2eabec9b246d46cb94d83713eaae4f26b49a8183fc4" "3df5335c36b40e417fec0392532c1b82b79114a05d5ade62cfe3de63a59bc5c6" "f94110b35f558e4c015b2c680f150bf8a19799d775f8352c957d9d1054b0a210" "e6ff132edb1bfa0645e2ba032c44ce94a3bd3c15e3929cdf6c049802cf059a2a" "76bfa9318742342233d8b0b42e824130b3a50dcc732866ff8e47366aed69de11" "c4bdbbd52c8e07112d1bfd00fee22bf0f25e727e95623ecb20c4fa098b74c1bd" "0a41da554c41c9169bdaba5745468608706c9046231bbbc0d155af1a12f32271" "4bca89c1004e24981c840d3a32755bf859a6910c65b829d9441814000cf6c3d0" "990e24b406787568c592db2b853aa65ecc2dcd08146c0d22293259d400174e37" default))
  '(debug-on-error nil)
+ '(debug-on-quit nil)
  '(debug-on-signal nil)
+ '(dired-listing-switches "-alh")
  '(ein:output-area-inlined-images t)
  '(exwm-floating-border-color "#011417")
  '(fci-rule-color "#405A61")
  '(flycheck-flake8-maximum-line-length 99)
  '(global-display-line-numbers-mode t)
- ;;'(global-linum-mode nil)
  '(highlight-tail-colors
    ((("#0d3630" "#0f393a" "green")
      . 0)
@@ -255,6 +243,7 @@
  '(pdf-latex-command "lualatex")
  '(prettify-symbols-unprettify-at-point 'right-edge)
  '(projectile-enable-caching t)
+ '(projectile-globally-ignored-file-suffixes '("#" "~"))
  '(python-indent-guess-indent-offset nil)
  '(pyvenv-activate "~/dev/emacs_pyenv_3.9")
  '(pyvenv-workon nil)
@@ -270,7 +259,7 @@
  '(undo-tree-auto-save-history nil)
  '(vc-handled-backends '(Git))
  '(warning-suppress-types '((pdf-view))))
-  
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -278,9 +267,9 @@
  ;; If there is more than one, they won't work right.
  '(default ((t (:inherit nil :extend nil :stipple nil :background "black" :foreground "#d4d4d4" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 120 :width normal :foundry "nil" :family "Menlo")))))
 
-  ;; Initialize company-jedi
-  (defun my/python-mode-hook ()
-    (add-to-list 'company-backends 'company-jedi))
+;; Initialize company-jedi
+(defun my/python-mode-hook ()
+  (add-to-list 'company-backends 'company-jedi))
 
 (add-hook 'python-mode-hook 'my/python-mode-hook)
 (add-hook 'python-mode-hook (apply-partially 'company-mode -1))
@@ -292,15 +281,15 @@
 (smartparens-global-mode t)
 
 
-  ;; Load theme
-  (load-theme 'doom-dark+)
+;; Load theme
+(load-theme 'doom-dark+)
 
-  (elpy-enable)
+(elpy-enable)
 (require 'pyvenv)
 
 ;; (require 'company-tabnine)
 ;; (add-to-list 'company-backends #'company-tabnine)
-  
+
 (pyvenv-workon ".")
 
 
@@ -332,7 +321,7 @@
       (when (looking-at "^\\s-+")
         (untabify (match-beginning 0) (match-end 0)))
       (when (looking-at "^    ")
-                (replace-match "")))))
+        (replace-match "")))))
 
 ;; Autoformat python on save
 ;; (add-hook 'elpy-mode-hook (lambda ()
@@ -371,7 +360,7 @@
   (interactive)
   (org-display-inline-images t t))
 (global-set-key (kbd "C-c C-x C v")
-                                'do-org-show-all-inline-images)
+                'do-org-show-all-inline-images)
 
 (menu-bar-mode -1)
 
@@ -437,6 +426,10 @@
   (interactive)
   (find-file "~/.emacs.d/init.el")
   )
+(defun scratch ()
+  (interactive)
+  (find-file "~/Desktop/scratch.txt")
+  )
 (defun mebatch-history ()
   (interactive)
   (find-file "/ssh:maxsobolmark@sc.stanford.edu:/iris/u/maxsobolmark/mebatch/mebatch_history.txt")
@@ -448,7 +441,6 @@
 
 (setq visible-bell 1)
 
-(global-set-key (kbd "M-p") 'ace-window)
 (global-set-key (kbd "M-<escape>") 'ace-window)
 ;; (global-set-key (kbd "<f3>") 'ace-window)
 (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
@@ -497,8 +489,8 @@
 (setq TeX-PDF-mode t)
 
 (add-hook 'LaTeX-mode-hook
-      (lambda()
-        (local-set-key [C-tab] 'TeX-complete-symbol)))
+          (lambda()
+            (local-set-key [C-tab] 'TeX-complete-symbol)))
 
 (autoload 'org "org" "org mode")
 ;; (require 'org)
@@ -579,7 +571,7 @@
 ;; (setenv "VIRTUAL_ENV" "~/dev/emacs_pyenv")
 (setenv "VIRTUAL_ENV" "~/dev/emacs_pyenv_3.9")
 
-(add-hook 'text-mode-hook #'auto-fill-mode)
+;; (add-hook 'text-mode-hook #'auto-fill-mode)
 (add-hook 'python-mode-hook #'auto-fill-mode)
 (setq-default fill-column 100)
 
@@ -603,13 +595,13 @@
 
 (defun my-insert-before-line ()
   (interactive)
-  ; Bring cursor to start of line (plus indentation)
+                                        ; Bring cursor to start of line (plus indentation)
   (back-to-indentation)
-  ; Copy indentation
+                                        ; Copy indentation
   (set-mark (point))
   (beginning-of-line)
   (call-interactively #'kill-ring-save)
-  ; Add new line and indentation
+                                        ; Add new line and indentation
   (open-line 1)
   (yank)
   (rotate-yank-pointer 1))
@@ -728,14 +720,14 @@ same directory as the org-buffer and insert a link to this file."
                   (format-time-string "%Y%m%d_%H%M%S_")) ) ".png"))
   (unless (file-exists-p (file-name-directory filename))
     (make-directory (file-name-directory filename)))
-  ; take screenshot
+                                        ; take screenshot
   (if (eq system-type 'darwin)
       (call-process "screencapture" nil nil nil "-i" filename))
   (if (eq system-type 'gnu/linux)
       (call-process "import" nil nil nil filename))
-  ; insert into file if correctly taken
+                                        ; insert into file if correctly taken
   (if (file-exists-p filename)
-    (insert (concat "[[file:" filename "]]"))))
+      (insert (concat "[[file:" filename "]]"))))
 
 (defun org-insert-clipboard-image (&optional file)
   (interactive "F")
@@ -816,7 +808,7 @@ same directory as the org-buffer and insert a link to this file."
   "This function is based on cdlatex-tab, intended to make cursor movements easier while writing python."
   (interactive)
   (catch 'stop
-  ;; move to next possible stopping site and check out the place
+    ;; move to next possible stopping site and check out the place
     (while t
       (cond
        ;; ((= (following-char) ?\ )
@@ -1043,7 +1035,7 @@ same directory as the org-buffer and insert a link to this file."
         (delete-char 1)
         )
     (message "Nothing selected"))
-    )
+  )
 
 (global-set-key (kbd "C-|") (lambda () (interactive) (python-selection)))
 
@@ -1092,7 +1084,7 @@ same directory as the org-buffer and insert a link to this file."
 ;;   (interactive)
 ;;   (kill-new (buffer-file-name))
 ;;   ;; remove the tramp part, anything before the first :
-  
+
 ;;   /ssh:maxsobolmark@sc.stanford.edu:/iris/u/maxsobolmark/decoupled_iql/dataset_utils.py
 ;;   (if (equal current-prefix-arg '(4))
 ;;       ;; C-u prefix, copy 
@@ -1106,7 +1098,10 @@ same directory as the org-buffer and insert a link to this file."
 (add-hook 'after-change-major-mode-hook
           (lambda ()
             (when (string= (buffer-name) "*scratch*")
-              (copilot-mode -1))))
+              (progn
+                (auto-fill-mode -1)
+                (copilot-mode -1))
+              )))
 (pixel-scroll-precision-mode)
 
 (persistent-scratch-setup-default)
@@ -1127,30 +1122,103 @@ same directory as the org-buffer and insert a link to this file."
   ;; For reference, the output looks like this: output volume:31, input volume:53, alert volume:100, output muted:false
   (setq current-volume (string-to-number (string-trim (shell-command-to-string "osascript -e 'get volume settings' | awk -F '[:,]' '{print $2}'"))))
   (setq new-volume (+ current-volume delta))
-    (if (> new-volume 100)
-        (setq new-volume 100)
-      )
-    (if (< new-volume 0)
-        (setq new-volume 0)
-      )
-    (shell-command-to-string (format "osascript -e 'set volume output volume %s'" new-volume))
-    (message (format "Volume: %s" new-volume))
+  (if (> new-volume 100)
+      (setq new-volume 100)
     )
+  (if (< new-volume 0)
+      (setq new-volume 0)
+    )
+  (shell-command-to-string (format "osascript -e 'set volume output volume %s'" new-volume))
+  (message (format "Volume: %s" new-volume))
+  )
 
 (defun volume-up ()
-    "Increase the volume by 10."
-    (interactive)
-    (change-volume 10)
-    )
+  "Increase the volume by 10."
+  (interactive)
+  (change-volume 10)
+  )
 
 (defun volume-down ()
-    "Decrease the volume by 10."
-    (interactive)
-    (change-volume -10)
-    )
+  "Decrease the volume by 10."
+  (interactive)
+  (change-volume -10)
+  )
 
 (global-set-key (kbd "<f11>") 'volume-down)
 (global-set-key (kbd "<f12>") 'volume-up)
 
 ;; (require 'key-chord)
 ;; (key-chord-mode 1)
+
+(autoload 'dired-async-mode "dired-async.el" nil t)
+(dired-async-mode 1)
+
+
+(defun mark-sexp-with-prefix (arg)
+  "Mark the sexp at point. With prefix ARG, mark previous sexp."
+  (interactive "P")
+  (unless (region-active-p)
+    (set-mark (point)))
+  (if arg
+      (backward-sexp)
+    (forward-sexp))
+  )
+
+(global-set-key (kbd "C-M-SPC") 'mark-sexp-with-prefix)
+(setq frame-resize-pixelwise t)
+
+(defun copy-buffer-path (&optional prefix)
+  "Copy the path of the current buffer to the kill ring.
+With prefix arg, include the remote path for tramp buffers."
+  (interactive "P")
+  (let ((filename (buffer-file-name)))
+    (if filename
+        (let* ((path (if (and (not prefix) (file-remote-p filename))
+                         (tramp-file-name-localname (tramp-dissect-file-name filename))
+                       (file-name-directory filename))))
+          (kill-new path)
+          (message "Copied buffer path: %s" path))
+      ;; For dired buffers
+      (let ((path (if prefix
+                      default-directory
+                    (tramp-file-name-localname (tramp-dissect-file-name default-directory)))))
+        (kill-new path)
+        (message "Copied buffer path: %s" path)))))
+(global-set-key (kbd "M-C") 'copy-buffer-path)
+
+(defun kill-all-buffers ()
+  "Kill all buffers except shell buffers."
+  (interactive)
+  (mapc 'kill-buffer
+        (delq (current-buffer)
+              (seq-filter (lambda (buffer)
+                            (and (or (buffer-file-name buffer)
+                                     (with-current-buffer buffer
+                                       (eq major-mode 'dired-mode)))
+                                 (not (get-buffer-process buffer))))
+                          (buffer-list)))))
+
+(require 'chatgpt-shell)
+
+(setq scroll-preserve-screen-position t)
+(global-set-key (kbd "M-p") 'scroll-down-line)
+(global-set-key (kbd "M-n") 'scroll-up-line)
+
+;; (defadvice projectile-project-root (around ignore-remote first activate)
+;;   (unless (file-remote-p default-directory) ad-do-it))
+
+
+;; Use zsh instead of bash for completions
+'(explicit-shell-file-name "/bin/zsh")
+'(explicit-zsh-args '("--interactive" "--login"))
+
+;; Disable echoed commands
+'(comint-process-echoes 0)
+
+(global-set-key (kbd "C-^") 'enlarge-window)
+(global-set-key (kbd "C-M-^") 'shrink-window)
+
+;; Put all backup files in a single directory
+(setq backup-directory-alist '(("." . "~/.emacs.d/backup_files")))
+
+(global-set-key (kbd "C-x f") 'counsel-find-file)
