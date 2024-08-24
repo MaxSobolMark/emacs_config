@@ -198,6 +198,98 @@
  '(avy-enter-times-out nil)
  '(avy-timeout-seconds 0.2)
  '(cdlatex-paired-parens "$[{(")
+ '(connection-local-criteria-alist
+   '(((:application tramp :machine "DNa828f4a.SUNet")
+      tramp-connection-local-darwin-ps-profile)
+     ((:application tramp :machine "Joels-MBP-4.fibertel.com.ar")
+      tramp-connection-local-darwin-ps-profile)
+     ((:application tramp :machine "Joels-MacBook-Pro-4.local")
+      tramp-connection-local-darwin-ps-profile)
+     ((:application tramp :machine "DN0a24114d.SUNet")
+      tramp-connection-local-darwin-ps-profile)
+     ((:application tramp :machine "localhost")
+      tramp-connection-local-darwin-ps-profile)
+     ((:application tramp :machine "Joels-MacBook-Pro-3.local")
+      tramp-connection-local-darwin-ps-profile)
+     ((:application tramp)
+      tramp-connection-local-default-system-profile tramp-connection-local-default-shell-profile)
+     ((:application eshell)
+      eshell-connection-default-profile)))
+ '(connection-local-profile-alist
+   '((tramp-connection-local-darwin-ps-profile
+      (tramp-process-attributes-ps-args "-acxww" "-o" "pid,uid,user,gid,comm=abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" "-o" "state=abcde" "-o" "ppid,pgid,sess,tty,tpgid,minflt,majflt,time,pri,nice,vsz,rss,etime,pcpu,pmem,args")
+      (tramp-process-attributes-ps-format
+       (pid . number)
+       (euid . number)
+       (user . string)
+       (egid . number)
+       (comm . 52)
+       (state . 5)
+       (ppid . number)
+       (pgrp . number)
+       (sess . number)
+       (ttname . string)
+       (tpgid . number)
+       (minflt . number)
+       (majflt . number)
+       (time . tramp-ps-time)
+       (pri . number)
+       (nice . number)
+       (vsize . number)
+       (rss . number)
+       (etime . tramp-ps-time)
+       (pcpu . number)
+       (pmem . number)
+       (args)))
+     (tramp-connection-local-busybox-ps-profile
+      (tramp-process-attributes-ps-args "-o" "pid,user,group,comm=abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" "-o" "stat=abcde" "-o" "ppid,pgid,tty,time,nice,etime,args")
+      (tramp-process-attributes-ps-format
+       (pid . number)
+       (user . string)
+       (group . string)
+       (comm . 52)
+       (state . 5)
+       (ppid . number)
+       (pgrp . number)
+       (ttname . string)
+       (time . tramp-ps-time)
+       (nice . number)
+       (etime . tramp-ps-time)
+       (args)))
+     (tramp-connection-local-bsd-ps-profile
+      (tramp-process-attributes-ps-args "-acxww" "-o" "pid,euid,user,egid,egroup,comm=abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" "-o" "state,ppid,pgid,sid,tty,tpgid,minflt,majflt,time,pri,nice,vsz,rss,etimes,pcpu,pmem,args")
+      (tramp-process-attributes-ps-format
+       (pid . number)
+       (euid . number)
+       (user . string)
+       (egid . number)
+       (group . string)
+       (comm . 52)
+       (state . string)
+       (ppid . number)
+       (pgrp . number)
+       (sess . number)
+       (ttname . string)
+       (tpgid . number)
+       (minflt . number)
+       (majflt . number)
+       (time . tramp-ps-time)
+       (pri . number)
+       (nice . number)
+       (vsize . number)
+       (rss . number)
+       (etime . number)
+       (pcpu . number)
+       (pmem . number)
+       (args)))
+     (tramp-connection-local-default-shell-profile
+      (shell-file-name . "/bin/sh")
+      (shell-command-switch . "-c"))
+     (tramp-connection-local-default-system-profile
+      (path-separator . ":")
+      (null-device . "/dev/null"))
+     (eshell-connection-default-profile
+      (eshell-path-env-list))))
  '(copilot-node-executable "/Users/joelsobolmark/.nvm/versions/node/v17.9.1/bin/node")
  '(counsel-find-file-ignore-regexp "\\(?:\\‘[#.]\\)\\|\\(?:[#~]\\’\\)\\|\\(\\.~undo-tree~\\)$")
  '(custom-safe-themes
@@ -207,6 +299,11 @@
  '(debug-on-signal nil)
  '(dired-listing-switches "-alh")
  '(ein:output-area-inlined-images t)
+ '(elfeed-feeds
+   '("https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml"))
+ '(elpy-modules
+   '(elpy-module-company elpy-module-eldoc elpy-module-flymake elpy-module-pyvenv elpy-module-yasnippet elpy-module-django elpy-module-sane-defaults))
+ '(explicit-shell-file-name "/bin/zsh")
  '(exwm-floating-border-color "#011417")
  '(fci-rule-color "#405A61")
  '(flycheck-flake8-maximum-line-length 99)
@@ -232,6 +329,8 @@
  '(jdee-db-spec-breakpoint-face-colors (cons "#073642" "#56697A"))
  '(jedi:environment-virtualenv '("~/miniconda3/bin/virtualenv"))
  '(latex-preview-pane-multifile-mode 'auctex)
+ '(magit-diff-highlight-trailing nil)
+ '(make-backup-files nil)
  '(ns-right-alternate-modifier 'control)
  '(objed-cursor-color "#dc322f")
  '(org-format-latex-options
@@ -247,17 +346,20 @@
  '(python-indent-guess-indent-offset nil)
  '(pyvenv-activate "~/dev/emacs_pyenv_3.9")
  '(pyvenv-workon nil)
- '(remote-file-name-inhibit-cache 600)
+ '(remote-file-name-inhibit-cache 1200)
+ '(remote-file-name-inhibit-locks t)
  '(set-mark-command-repeat-pop t)
  '(shell-escape-mode "-shell-escape")
  '(shell-file-name "/bin/zsh")
  '(tab-width 4)
+ '(tramp-auto-save-directory "/Users/joelsobolmark/.emacs.d/backup_files/")
  '(tramp-connection-timeout 25)
  '(tramp-remote-path
    '(tramp-default-remote-path "/bin" "/usr/bin" "/sbin" "/usr/sbin" "/usr/local/bin" "/usr/local/sbin" "/local/bin" "/local/freeware/bin" "/local/gnu/bin" "/usr/freeware/bin" "/usr/pkg/bin" "/usr/contrib/bin" "/opt/bin" "/opt/sbin" "/opt/local/bin" "/sailhome/maxsobolmark/defaultenv/bin"))
- '(tramp-verbose 1)
+ '(tramp-verbose 6)
  '(undo-tree-auto-save-history nil)
  '(vc-handled-backends '(Git))
+ '(vterm-kill-buffer-on-exit nil)
  '(warning-suppress-types '((pdf-view))))
 
 (custom-set-faces
@@ -267,12 +369,12 @@
  ;; If there is more than one, they won't work right.
  '(default ((t (:inherit nil :extend nil :stipple nil :background "black" :foreground "#d4d4d4" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 120 :width normal :foundry "nil" :family "Menlo")))))
 
-;; Initialize company-jedi
-(defun my/python-mode-hook ()
-  (add-to-list 'company-backends 'company-jedi))
+;; ;; Initialize company-jedi
+;; (defun my/python-mode-hook ()
+;;   (add-to-list 'company-backends 'company-jedi))
 
-(add-hook 'python-mode-hook 'my/python-mode-hook)
-(add-hook 'python-mode-hook (apply-partially 'company-mode -1))
+;; (add-hook 'python-mode-hook 'my/python-mode-hook)
+;; (add-hook 'python-mode-hook (apply-partially 'company-mode -1))
 
 ;; Always start smartparens mode in python-mode
 (add-hook 'python-mode-hook #'smartparens-mode)
@@ -406,22 +508,42 @@
 ;; (global-set-key (kbd "C-c C-9") 'mc/mark-previous-lines)
 
 
+(defun sshsirius ()
+  (interactive)
+  ;; Disable projectile-mode for this buffer
+  (projectile-mode -1)
+  (find-file "/ssh:max@172.28.76.245:~/")
+  )
 (defun sshcs ()
   (interactive)
   ;; Disable projectile-mode for this buffer
   (projectile-mode -1)
-  (find-file "/ssh:maxsobolmark@sc.stanford.edu:/iris/u/maxsobolmark")
+  (find-file "/ssh:maxsobolmark@ai.stanford.edu|ssh:maxsobolmark@sc.stanford.edu:/iris/u/maxsobolmark")
+  )
+(defun sshcsdt ()
+  (interactive)
+  ;; Disable projectile-mode for this buffer
+  (projectile-mode -1)
+  (find-file "/ssh:maxsobolmark@ai.stanford.edu|ssh:maxsobolmark@scdt.stanford.edu:/iris/u/maxsobolmark")
   )
 (defun sshcs-reconnect ()
   (interactive)
   (tramp-cleanup-all-connections)
   ;; Disable projectile-mode for this buffer
   (projectile-mode -1)
-  (find-file "/ssh:maxsobolmark@sc.stanford.edu:/iris/u/maxsobolmark")
+  (find-file "/ssh:maxsobolmark@ai.stanford.edu|ssh:maxsobolmark@sc.stanford.edu:/iris/u/maxsobolmark")
   )
 (defun sshws ()
   (interactive)
   (find-file "/ssh:maxsobolmark@iris-ws-10.stanford.edu:/"))
+(defun sshws18 ()
+  (interactive)
+  (find-file "/ssh:maxsobolmark@iris-ws-18.stanford.edu:/"))
+(defun sshmax ()
+  (interactive)
+  ;; Disable projectile-mode for this buffer
+  (projectile-mode -1)
+  (find-file "/ssh:max@172.28.85.119:~/"))
 (defun initel ()
   (interactive)
   (find-file "~/.emacs.d/init.el")
@@ -430,14 +552,20 @@
   (interactive)
   (find-file "~/Desktop/scratch.txt")
   )
-(defun mebatch-history ()
-  (interactive)
-  (find-file "/ssh:maxsobolmark@sc.stanford.edu:/iris/u/maxsobolmark/mebatch/mebatch_history.txt")
+(defun mebatch-history (&optional prefix)
+  (interactive "P")
+  (if prefix
+      (find-file "/ssh:max@172.28.85.119:~/dev/mebatch/mebatch_history.txt")
+    (find-file "/ssh:maxsobolmark@ai.stanford.edu|ssh:maxsobolmark@sc.stanford.edu:/iris/u/maxsobolmark/mebatch/mebatch_history.txt")
+    )
   )
 (defun bashrc ()
   (interactive)
-  (find-file "/ssh:maxsobolmark@sc.stanford.edu:~/.bashrc")
+  (find-file "/ssh:maxsobolmark@ai.stanford.edu|ssh:maxsobolmark@sc.stanford.edu:~/.bashrc")
   )
+(defun jingyun ()
+  (interactive)
+  (find-file "/ssh:maxsobolmark@ai.stanford.edu|ssh:maxsobolmark@sc.stanford.edu:/iris/u/jingyuny/projects/p_bridge/"))
 
 (setq visible-bell 1)
 
@@ -630,25 +758,48 @@
 
 (put 'downcase-region 'disabled nil)
 
+;; (use-package lsp-mode
+;;   :custom
+;;   (lsp-enable-snippet t))
+
+;; (use-package lsp-pyright
+;;   :ensure t
+;;   :hook (python-mode . (lambda ()
+;;                          (if (file-remote-p default-directory)
+;;                                         ; Disable lsp-mode in remote buffers
+;;                              (lsp-mode -1)
+;;                                         ; Enable lsp-mode in local buffers
+;;                            (lambda ()
+;;                              (require 'lsp-pyright)
+;;                              (lsp)))))
+;;   :init (when (executable-find "python3")
+;;           (setq lsp-pyright-python-executable-cmd "python3")))
 (use-package lsp-mode
-  :custom
-  (lsp-enable-snippet t))
+  :init
+  ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
+  (setq lsp-keymap-prefix "s-l")
+  :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
+         (python-mode . lsp-deferred)
+         ;; if you want which-key integration
+         (lsp-mode . lsp-enable-which-key-integration))
+  :commands lsp lsp-deferred
+  :config
+  (setq lsp-prefer-flymake nil)  ; Use flycheck instead of flymake
+  ;; Disable lsp-mode in TRAMP buffers
+  (defun my-lsp-disable-tramp ()
+    (when (file-remote-p default-directory)
+      (lsp-mode -1)))
+  (add-hook 'lsp-mode-hook #'my-lsp-disable-tramp))
 
 (use-package lsp-pyright
-  :ensure t
-  :hook (python-mode . (lambda ()
-                         (if (file-remote-p default-directory)
-                                        ; Disable lsp-mode in remote buffers
-                             (lsp-mode -1)
-                                        ; Enable lsp-mode in local buffers
-                           (lambda ()
-                             (require 'lsp-pyright)
-                             (lsp)))))
-  :init (when (executable-find "python3")
-          (setq lsp-pyright-python-executable-cmd "python3")))
+  :hook (python-mode . (lambda () 
+                         (require 'lsp-pyright)
+                         (lsp-deferred))))
 
 (use-package lsp-ui
   :commands lsp-ui-mode)
+
+(setq read-process-output-max (* 1024 1024)) ;; 1mb
 
 
 ;; (lsp-register-client
@@ -861,7 +1012,7 @@ same directory as the org-buffer and insert a link to this file."
 (global-set-key (kbd "<f9>") 'make-frame)
 (global-diff-hl-mode)
 
-(add-hook 'python-mode-hook 'jedi:setup)
+;; (add-hook 'python-mode-hook 'jedi:setup)
 
 ;; Javascript stuff
 (autoload 'js2-mode "js2-mode" "js2-mode")
@@ -1078,22 +1229,6 @@ same directory as the org-buffer and insert a link to this file."
 
 (global-unset-key (kbd "C-z"))
 
-;; ;; Create a C-M-c shortcut for copying to kill the current file name
-;; (defun copy-file-name-to-kill-ring ()
-;;   "Copy the current buffer file name to the kill ring."
-;;   (interactive)
-;;   (kill-new (buffer-file-name))
-;;   ;; remove the tramp part, anything before the first :
-
-;;   /ssh:maxsobolmark@sc.stanford.edu:/iris/u/maxsobolmark/decoupled_iql/dataset_utils.py
-;;   (if (equal current-prefix-arg '(4))
-;;       ;; C-u prefix, copy 
-
-;;   (message (buffer-file-name)))
-
-
-;; (global-set-key (kbd "C-M-c") 'copy-file-name-to-kill-ring)
-
 ;; Disable copilot-mode on the scratch buffer:
 (add-hook 'after-change-major-mode-hook
           (lambda ()
@@ -1198,8 +1333,6 @@ With prefix arg, include the remote path for tramp buffers."
                                  (not (get-buffer-process buffer))))
                           (buffer-list)))))
 
-(require 'chatgpt-shell)
-
 (setq scroll-preserve-screen-position t)
 (global-set-key (kbd "M-p") 'scroll-down-line)
 (global-set-key (kbd "M-n") 'scroll-up-line)
@@ -1222,3 +1355,138 @@ With prefix arg, include the remote path for tramp buffers."
 (setq backup-directory-alist '(("." . "~/.emacs.d/backup_files")))
 
 (global-set-key (kbd "C-x f") 'counsel-find-file)
+
+(use-package vterm
+  :ensure t)
+
+(define-key vterm-mode-map (kbd "C-g") 'vterm-copy-mode)
+(define-key vterm-copy-mode-map (kbd "C-g") 'vterm-copy-mode-done)
+(define-key vterm-mode-map (kbd "C-q") 'vterm-send-next-key)
+
+(defun my/vterm-mode-customization ()
+  "Customize mode line for vterm-mode."
+  (setq mode-name "VTerm 💻"))
+
+(defun my/vterm-copy-mode-customization ()
+  "Customize mode line for vterm-copy-mode."
+  (setq mode-name "VTerm 🖊️"))
+
+(add-hook 'vterm-mode-hook 'my/vterm-mode-customization)
+
+(with-eval-after-load 'vterm
+  (define-advice vterm-copy-mode (:after (&rest r) my-customize-vterm-copy-mode-line)
+    "Customize mode line when entering or exiting `vterm-copy-mode'."
+    (if vterm-copy-mode
+        (my/vterm-copy-mode-customization)
+      (my/vterm-mode-customization))))
+
+
+
+
+(defun local-vterm ()
+  "If buffer *local-vterm* exists, switch to it. Otherwise, create a new vterm buffer from home directory."
+  (interactive)
+  (if (get-buffer "*local-vterm*")
+      (switch-to-buffer "*local-vterm*")
+    (progn
+      (find-file "~")
+      (vterm "~/")
+      (rename-buffer "*local-vterm*")
+      )
+    )
+  )
+
+(defun sshcs-vterm ()
+  "If buffer *ssh-vterm* exists, switch to it. Otherwise, create a new vterm buffer from sc server."
+  (interactive)
+  (if (get-buffer "*sshcs-vterm*")
+      (switch-to-buffer "*sshcs-vterm*")
+    (progn
+      (sshcs)
+      (vterm "/ssh:maxsobolmark@ai.stanford.edu|ssh:maxsobolmark@sc.stanford.edu:/iris/u/maxsobolmark/")
+      (rename-buffer "*sshcs-vterm*")
+      )
+    )
+  )
+
+(defun ws18-vterm ()
+  "If buffer *ws18-vterm* exists, switch to it. Otherwise, create a new vterm buffer from ws18 server."
+  (interactive)
+  (if (get-buffer "*ws18-vterm*")
+      (switch-to-buffer "*ws18-vterm*")
+    (progn
+      (projectile-mode -1)
+      (find-file "/ssh:maxsobolmark@ai.stanford.edu|ssh:maxsobolmark@iris-ws-18.stanford.edu:/iris/u/maxsobolmark")
+      (vterm "/ssh:maxsobolmark@ai.stanford.edu|ssh:maxsobolmark@iris-ws-18.stanford.edu:/iris/u/maxsobolmark/")
+      (rename-buffer "*ws18-vterm*")
+      )
+    )
+  )
+
+(defun vterm-shortcut (&optional prefix)
+  "If no prefix, open local vterm. If prefix, open ssh vterm."
+  (interactive "P")
+  (if prefix
+      (sshcs-vterm)
+    (local-vterm))
+  )
+(global-set-key (kbd "<f7>") 'vterm-shortcut)
+
+;; Remove <f1> through <f12> and escape from vterm-mode-map
+(define-key vterm-mode-map (kbd "<f1>") nil)
+(define-key vterm-mode-map (kbd "<f2>") nil)
+(define-key vterm-mode-map (kbd "<f3>") nil)
+(define-key vterm-mode-map (kbd "<f4>") nil)
+(define-key vterm-mode-map (kbd "<f5>") nil)
+(define-key vterm-mode-map (kbd "<f6>") nil)
+(define-key vterm-mode-map (kbd "<f7>") nil)
+(define-key vterm-mode-map (kbd "<f8>") nil)
+(define-key vterm-mode-map (kbd "<f9>") nil)
+(define-key vterm-mode-map (kbd "<f10>") nil)
+(define-key vterm-mode-map (kbd "<f11>") nil)
+(define-key vterm-mode-map (kbd "<f12>") nil)
+(define-key vterm-mode-map (kbd "<escape>") nil)
+(define-key vterm-mode-map (kbd "M-:") nil)
+
+;; Make C-v and M-v pass page up and page down to vterm
+(define-key vterm-mode-map (kbd "C-v") 'vterm-send-key (kbd "<next>"))
+(define-key vterm-mode-map (kbd "M-v") 'vterm-send-key (kbd "<prior>"))
+
+(use-package forge
+  :after magit)
+
+(defun vterm-scroll-fast (&optional prefix)
+  "Scroll up (down) fast in vterm by sending the up (down) key 50 times."
+  (interactive)
+  (when (eq major-mode 'vterm-mode)
+    (dotimes (_ 50) ; Repeat the action 50 times
+      (vterm-send-key (if prefix "<down>" "<up>"))))
+  )
+
+;; Bind M-<up> to vterm-scroll-fast without prefix
+(define-key vterm-mode-map (kbd "M-<up>") 'vterm-scroll-fast)
+;; Bind M-<down> to vterm-scroll-fast with prefix
+(define-key vterm-mode-map (kbd "M-<down>") (lambda () (interactive) (vterm-scroll-fast t)))
+
+(setq magit-refresh-status-buffer nil)
+(remove-hook 'server-switch-hook 'magit-commit-diff)
+(remove-hook 'with-editor-filter-visit-hook 'magit-commit-diff)
+
+(customize-set-variable
+ 'tramp-ssh-controlmaster-options
+ (concat
+  "-o ControlPath=/tmp/ssh-ControlPath-%%r@%%h:%%p "
+  "-o ControlMaster=auto -o ControlPersist=yes"))
+
+(require 'mebatch-mode)
+
+(setq vc-ignore-dir-regexp
+      (format "\\(%s\\)\\|\\(%s\\)"
+              vc-ignore-dir-regexp
+              tramp-file-name-regexp))
+(auto-fill-mode -1)
+
+(define-key key-translation-map (kbd "C-M-l") (kbd "s-l"))
+(define-key lsp-mode-map (kbd "s-l >") 'lsp-ui-find-next-reference)
+(define-key lsp-mode-map (kbd "s-l <") 'lsp-ui-find-prev-reference)
+
