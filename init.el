@@ -10,6 +10,7 @@
   (require 'use-package))
 (setq use-package-always-ensure t)
 
+(load "~/.emacs.d/packages/with-editor/with-editor.el")
 (load "~/.emacs.d/custom-variables.el")
 (load "~/.emacs.d/package-installations.el")
 (load "~/.emacs.d/custom-functions.el")
@@ -18,7 +19,7 @@
 (load "~/.emacs.d/packages/mebatch-mode.el")
 (load "~/.emacs.d/packages/ediff-trees.el")
 (setq ztree-diff-filter-list '("^\\." ".?\.pyc$" ".?pycache.?"))
-(load "~/.emacs.d/packages/consult-patch.el")
+;; (load "~/.emacs.d/packages/consult-patch.el")
 
 
 
@@ -109,3 +110,4 @@
 ;; Diminish which-key
 (diminish 'which-key-mode)
 
+(add-to-list 'tramp-methods '("gcssh" (tramp-login-program "gcloud compute ssh") (tramp-login-args (("%h"))) (tramp-async-args (("-q"))) (tramp-remote-shell "/bin/sh") (tramp-remote-shell-args ("-c")) (tramp-gw-args (("-o" "GlobalKnownHostsFile=/dev/null") ("-o" "UserKnownHostsFile=/dev/null") ("-o" "StrictHostKeyChecking=no"))) (tramp-default-port 22)))

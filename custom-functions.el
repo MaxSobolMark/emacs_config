@@ -33,27 +33,27 @@
   (interactive)
   ;; Disable projectile-mode for this buffer
   (projectile-mode -1)
-  (find-file "/ssh:maxsobolmark@ai.stanford.edu|ssh:maxsobolmark@sc.stanford.edu:/iris/u/maxsobolmark")
+  (find-file "/ssh:sc.stanford.edu:/iris/u/maxsobolmark")
   )
 (defun sshcsdt ()
   (interactive)
   ;; Disable projectile-mode for this buffer
   (projectile-mode -1)
-  (find-file "/ssh:maxsobolmark@ai.stanford.edu|ssh:maxsobolmark@scdt.stanford.edu:/iris/u/maxsobolmark")
+  (find-file "/ssh:scdt.stanford.edu:/iris/u/maxsobolmark")
   )
 (defun sshcs-reconnect ()
   (interactive)
   (tramp-cleanup-all-connections)
   ;; Disable projectile-mode for this buffer
   (projectile-mode -1)
-  (find-file "/ssh:maxsobolmark@ai.stanford.edu|ssh:maxsobolmark@sc.stanford.edu:/iris/u/maxsobolmark")
+  (find-file "/ssh:sc.stanford.edu:/iris/u/maxsobolmark")
   )
 (defun sshws ()
   (interactive)
-  (find-file "/ssh:maxsobolmark@ai.stanford.edu|ssh:maxsobolmark@iris-ws-10.stanford.edu:/"))
+  (find-file "/ssh:iris-ws-10.stanford.edu:/"))
 (defun sshws18 ()
   (interactive)
-  (find-file "/ssh:maxsobolmark@ai.stanford.edu|ssh:maxsobolmark@iris-ws-18.stanford.edu:/"))
+  (find-file "/ssh:iris-ws-18.stanford.edu:/"))
 (defun sshmax ()
   (interactive)
   ;; Disable projectile-mode for this buffer
@@ -71,16 +71,13 @@
   (interactive "P")
   (if prefix
       (find-file "/ssh:max@172.28.85.119:~/dev/mebatch/mebatch_history.txt")
-    (find-file "/ssh:maxsobolmark@ai.stanford.edu|ssh:maxsobolmark@sc.stanford.edu:/iris/u/maxsobolmark/mebatch/mebatch_history.txt")
+    (find-file "/ssh:sc.stanford.edu:/iris/u/maxsobolmark/mebatch/mebatch_history.txt")
     )
   )
 (defun bashrc ()
   (interactive)
-  (find-file "/ssh:maxsobolmark@ai.stanford.edu|ssh:maxsobolmark@sc.stanford.edu:~/.bashrc")
+  (find-file "/ssh:sc.stanford.edu:~/.bashrc")
   )
-(defun jingyun ()
-  (interactive)
-  (find-file "/ssh:maxsobolmark@ai.stanford.edu|ssh:maxsobolmark@sc.stanford.edu:/iris/u/jingyuny/projects/p_bridge/"))
 
 (defun my-insert-before-line ()
   (interactive)
@@ -268,7 +265,7 @@ With prefix arg, include the remote path for tramp buffers."
       (switch-to-buffer "*sshcs-vterm*")
     (progn
       (sshcs)
-      (vterm "/ssh:maxsobolmark@ai.stanford.edu|ssh:maxsobolmark@sc.stanford.edu:/iris/u/maxsobolmark/")
+      (vterm "/ssh:sc.stanford.edu:/iris/u/maxsobolmark/")
       (rename-buffer "*sshcs-vterm*")
       )
     )
@@ -281,8 +278,8 @@ With prefix arg, include the remote path for tramp buffers."
       (switch-to-buffer "*ws18-vterm*")
     (progn
       (projectile-mode -1)
-      (find-file "/ssh:maxsobolmark@ai.stanford.edu|ssh:maxsobolmark@iris-ws-18.stanford.edu:/iris/u/maxsobolmark")
-      (vterm "/ssh:maxsobolmark@ai.stanford.edu|ssh:maxsobolmark@iris-ws-18.stanford.edu:/iris/u/maxsobolmark/")
+      (find-file "/ssh:iris-ws-18.stanford.edu:/iris/u/maxsobolmark")
+      (vterm "/ssh:iris-ws-18.stanford.edu:/iris/u/maxsobolmark/")
       (rename-buffer "*ws18-vterm*")
       )
     )
@@ -303,3 +300,124 @@ With prefix arg, include the remote path for tramp buffers."
     (dotimes (_ 50) ; Repeat the action 50 times
       (vterm-send-key (if prefix "<down>" "<up>"))))
   )
+
+
+
+;; Function to check if a file is remote
+(defun file-remote-p* (filename)
+  "Enhanced remote file check that handles more edge cases."
+  (or (file-remote-p filename)
+      (string-match-p "^/\\(?:ssh\\|scp\\|sftp\\|su\\|sudo\\|ftp\\):" filename)))
+
+;; Enhanced function to open files intelligently
+(defun smart-find-file (filename &optional wildcards)
+  "Open FILENAME intelligently - async for remote files, directly for local ones.
+Uses standard find-file for directories or already-opened files.
+Optional WILDCARDS argument is passed to `find-file' for local files."
+  (interactive
+   (find-file-read-args "Find file: "
+                        (confirm-nonexistent-file-or-buffer)))
+  (cond
+   ;; If it's a directory or buffer already exists, use standard find-file
+   ((or (file-directory-p filename)
+        (get-file-buffer filename))
+    (find-file filename wildcards))
+   ;; If remote file, handle asynchronously
+   ((file-remote-p* filename)
+    (smart-find-file-remote filename))
+   ;; Otherwise, regular local file
+   (t
+    (find-file filename wildcards))))
+
+(defun smart-find-file-remote (filename)
+  "Open remote FILENAME asynchronously using TRAMP.
+Shows loading state in the target buffer while fetching content."
+  (let* ((buffer-name (generate-new-buffer-name (file-name-nondirectory filename)))
+         (target-frame (selected-frame))
+         (target-window (selected-window))
+         (loading-buffer (get-buffer-create buffer-name)))
+    ;; Set up the loading buffer
+    (with-current-buffer loading-buffer
+      (insert (format "Loading %s...\n\nPlease wait while the remote file is being fetched..." 
+                     filename))
+      (read-only-mode 1))
+    
+    ;; Display the loading buffer in the target window
+    (set-window-buffer target-window loading-buffer)
+    
+    ;; Start async process
+    (async-start
+     `(lambda ()
+        (with-temp-buffer
+          (insert-file-contents ,filename)
+          (buffer-string)))
+     `(lambda (content)
+        (when (frame-live-p ',target-frame)
+          (with-selected-frame ',target-frame
+            (with-current-buffer ,buffer-name
+              (read-only-mode -1)
+              (erase-buffer)
+              (insert content)
+              (set-visited-file-name ,filename)
+              (set-buffer-modified-p nil)
+              (normal-mode)
+              (read-only-mode -1)
+              (goto-char (point-min))
+              (when (window-live-p ',target-window)
+                (set-window-buffer ',target-window (current-buffer))))))))))
+
+;; Replace the default find-file with our smart version
+(global-set-key [remap find-file] 'smart-find-file)
+
+;; Also replace find-file-other-window if desired
+(defun smart-find-file-other-window (filename &optional wildcards)
+  "Like `smart-find-file', but select file's buffer in another window."
+  (interactive
+   (find-file-read-args "Find file in other window: "
+                        (confirm-nonexistent-file-or-buffer)))
+  (let ((other-window-buffer (selected-window)))
+    (other-window 1)
+    (smart-find-file filename wildcards)))
+
+(global-set-key [remap find-file-other-window] 'smart-find-file-other-window)
+
+;; Optionally, also handle find-file-other-frame
+(defun smart-find-file-other-frame (filename &optional wildcards)
+  "Like `smart-find-file', but select file's buffer in another frame."
+  (interactive
+   (find-file-read-args "Find file in other frame: "
+                        (confirm-nonexistent-file-or-buffer)))
+  (select-frame (make-frame))
+  (smart-find-file filename wildcards))
+
+(global-set-key [remap find-file-other-frame] 'smart-find-file-other-frame)
+
+;; Advice dired-find-file to use smart-find-file
+(defun dired-smart-find-file (&rest args)
+  "Advice for dired-find-file to use smart-find-file instead of find-file."
+  (let ((file (dired-get-file-for-visit)))
+    (smart-find-file file)))
+
+;; Apply the advice
+(advice-add 'dired-find-file :override #'dired-smart-find-file)
+
+;; For dired-find-file-other-window
+(defun dired-smart-find-file-other-window (&rest args)
+  "Advice for dired-find-file-other-window to use smart-find-file."
+  (let ((file (dired-get-file-for-visit)))
+    (other-window 1)
+    (smart-find-file file)))
+
+(advice-add 'dired-find-file-other-window :override #'dired-smart-find-file-other-window)
+
+
+(defun sshtpu ()
+  "SSH into a selected Google Cloud TPU instance."
+  (interactive)
+  (let* ((tpu-options (mapcar (lambda (n) (format "v4-tpu-%d-z" n)) (number-sequence 0 7))
+                      (selected-tpu (consult--read
+                                     tpu-options
+                                     :prompt "Select TPU: "
+                                     :category 'tpu))
+                      (file-path (concat "/gcssh:" selected-tpu ":/home/maxsobolmark/")))
+         (find-file file-path))))

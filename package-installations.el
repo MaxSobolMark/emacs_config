@@ -121,21 +121,21 @@
   (savehist-mode))
 
 
-;; Enable rich annotations using the Marginalia package
-(use-package marginalia
-  ;; Bind `marginalia-cycle' locally in the minibuffer.  To make the binding
-  ;; available in the *Completions* buffer, add it to the
-  ;; `completion-list-mode-map'.
-  :bind (:map minibuffer-local-map
-         ("M-A" . marginalia-cycle))
+;; ;; Enable rich annotations using the Marginalia package
+;; (use-package marginalia
+;;   ;; Bind `marginalia-cycle' locally in the minibuffer.  To make the binding
+;;   ;; available in the *Completions* buffer, add it to the
+;;   ;; `completion-list-mode-map'.
+;;   :bind (:map minibuffer-local-map
+;;          ("M-A" . marginalia-cycle))
 
   ;; The :init section is always executed.
-  :init
+;;  :init
 
   ;; Marginalia must be activated in the :init section of use-package such that
   ;; the mode gets enabled right away. Note that this forces loading the
   ;; package.
-  (marginalia-mode))
+;;  (marginalia-mode))
 
 
 (use-package embark
@@ -334,22 +334,31 @@
 
 (use-package lsp-mode
   :init
-  ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
-  (setq lsp-keymap-prefix "C-c l")
+  (setq lsp-keymap-prefix "C-'")
+  ;; Add this to completely disable LSP over TRAMP
+  (setq lsp-file-watch-threshold nil)
+  (setq lsp-enable-file-watchers nil)
+  (defun my/should-enable-lsp ()
+    "Return t if LSP should be enabled for current buffer."
+    (not (file-remote-p default-directory)))
   :hook (
-         (python-mode . lsp)
-         ;; if you want which-key integration
-         (lsp-mode . lsp-enable-which-key-integration)
-		 )
+         ;; Replace individual mode hooks with a general programming mode hook
+         (prog-mode . (lambda ()
+                       (when (my/should-enable-lsp)
+                         (lsp))))
+         (lsp-mode . lsp-enable-which-key-integration))
   :commands lsp
   :config
-  (setq lsp-headerline-breadcrumb-enable nil))
+  (setq lsp-headerline-breadcrumb-enable nil)
+  ;; Add this to prevent LSP from trying to work on remote files
+  (add-to-list 'lsp-disabled-clients '(python-ls . ((lambda (ws) 
+                                                     (file-remote-p (buffer-file-name)))))))
 
 ;; optionally
 (use-package lsp-ui :commands lsp-ui-mode)
 
 ;; optionally if you want to use debugger
-(use-package dap-mode)
+;; (use-package dap-mode)
 ;; (use-package dap-LANGUAGE) to load the dap adapter for your language
 
 (use-package consult-lsp
@@ -375,4 +384,23 @@
   :vc (:url "https://github.com/jsigman/unison-sync-mode.git"
             :rev :newest
             :branch "main")
+  )
+
+
+(use-package apheleia
+  :ensure t
+  :config
+  (apheleia-global-mode +1)
+  
+  ;; Configure formatters for different languages
+  (setq apheleia-formatters
+        '((python-mode . "black")
+          (js-mode . "prettier")
+          (css-mode . "prettier")
+          (html-mode . "prettier")
+          (json-mode . "prettier")
+          (typescript-mode . "prettier")
+          (rust-mode . "rustfmt")))
+
+  ;; Add more language-specific configurations as needed
   )

@@ -36,7 +36,7 @@
  '(avy-enter-times-out nil)
  '(avy-timeout-seconds 0.2)
  '(cdlatex-paired-parens "$[{(")
- '(copilot-node-executable "/Users/joelsobolmark/.nvm/versions/node/v20.18.0/bin/node")
+ '(copilot-node-executable "/opt/homebrew/bin/node")
  '(custom-safe-themes
    '("aec7b55f2a13307a55517fdf08438863d694550565dee23181d2ebd973ebd6b8"
 	 "1d5e33500bc9548f800f9e248b57d1b2a9ecde79cb40c0b1398dec51ee820daf"
@@ -93,6 +93,7 @@
  '(project-vc-merge-submodules nil)
  '(remote-file-name-inhibit-cache nil)
  '(remote-file-name-inhibit-locks t)
+ '(scroll-conservatively 101)
  '(set-mark-command-repeat-pop t)
  '(shell-escape-mode "-shell-escape")
  '(shell-file-name "/bin/zsh")
