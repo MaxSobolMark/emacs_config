@@ -56,16 +56,16 @@
                                  )))
 (global-set-key (kbd "<f10>") 'delete-window)
 
-(define-key copilot-completion-map (kbd "<tab>") 'copilot-accept-completion)
-(define-key copilot-completion-map (kbd "TAB") 'copilot-accept-completion)
+;; (define-key copilot-completion-map (kbd "<tab>") 'copilot-accept-completion)
+;; (define-key copilot-completion-map (kbd "TAB") 'copilot-accept-completion)
 
-(define-key copilot-completion-map (kbd "C-g") 'copilot-clear-overlay)
-(defhydra hydra-copilot-accept (global-map "M-\\")
-  "copilot-accept"
-  ("\\" copilot-accept-completion "accept")
-  ("c" copilot-complete "complete")
-  ("f" copilot-accept-completion-by-word "accept word completion")
-  ("n" copilot-accept-completion-by-line "accept line completion"))
+;; (define-key copilot-completion-map (kbd "C-g") 'copilot-clear-overlay)
+;; (defhydra hydra-copilot-accept (global-map "M-\\")
+;;   "copilot-accept"
+;;   ("\\" copilot-accept-completion "accept")
+;;   ("c" copilot-complete "complete")
+;;   ("f" copilot-accept-completion-by-word "accept word completion")
+;;   ("n" copilot-accept-completion-by-line "accept line completion"))
 
 (global-set-key (kbd "C-M-SPC") 'mark-sexp-with-prefix)
 

@@ -9,9 +9,9 @@
 (use-package consult
   ;; Replace bindings. Lazily loaded by `use-package'.
   :bind (
-		 ("C-<tab>" . consult-buffer)
+         ("C-<tab>" . consult-buffer)
          ("C-x b" . consult-buffer)                ;; orig. switch-to-buffer
-		 ;; C-c bindings in `mode-specific-map'
+         ;; C-c bindings in `mode-specific-map'
          ([remap Info-search] . consult-info)
          ;; C-x bindings in `ctl-x-map'
          ("C-x r b" . consult-bookmark)            ;; orig. bookmark-jump
@@ -52,10 +52,6 @@
          ("M-s" . consult-history)                 ;; orig. next-matching-history-element
          ("M-r" . consult-history))                ;; orig. previous-matching-history-element
 
-  ;; Enable automatic preview at point in the *Completions* buffer. This is
-  ;; relevant when you use the default completion UI.
-  ;; :hook (completion-list-mode . consult-preview-at-point-mode)
-
   ;; The :init configuration is always executed (Not lazy)
   :init
 
@@ -80,10 +76,7 @@
   ;; Optionally configure preview. The default value
   ;; is 'any, such that any key triggers the preview.
   (setq consult-preview-key 'any)
-  ;; (setq consult-preview-key "M-.")
-  ;; (setq consult-preview-key '("S-<down>" "S-<up>"))
-  ;; For some commands and buffer sources it is useful to configure the
-  ;; :preview-key on a per-command basis using the `consult-customize' macro.
+
   (consult-customize
    consult-theme :preview-key '(:debounce 0.2 any)
    consult-ripgrep consult-git-grep consult-grep
@@ -93,6 +86,31 @@
    ;; :preview-key "M-."
    :preview-key '(:debounce 0.4 any))
 
+  ;; Disable previews for file-related sources in consult-buffer
+  (consult-customize
+   consult-buffer
+   consult--source-buffer
+   consult--source-recent-file
+   consult--source-project-recent-file
+   consult--source-bookmark
+   :preview-key "M-.")
+
+  ;; Add center-on-candidate functionality to consult-line
+  (defun my/consult-line-center ()
+    "Center the current candidate line in the buffer."
+    (interactive)
+    (let ((candidate (car (consult--lookup-candidate))))
+      (when candidate
+        (with-selected-window (consult--get-window)
+          (goto-char candidate)
+          (recenter)))))
+
+  (consult-customize
+   consult-line
+   :add-history (list #'my/consult-line-center)
+   :preview-key (append consult-preview-key
+                        (list (kbd "C-l") #'my/consult-line-center)))
+
   ;; Optionally configure the narrowing key.
   ;; Both < and C-+ work reasonably well.
   (setq consult-narrow-key "<") ;; "C-+"
@@ -100,14 +118,14 @@
   ;; Optionally make narrowing help available in the minibuffer.
   ;; You may want to use `embark-prefix-help-command' or which-key instead.
   ;; (keymap-set consult-narrow-map (concat consult-narrow-key " ?") #'consult-narrow-help)
-)
+  )
 
 (use-package orderless
   :ensure t
   :custom
   (completion-styles '(orderless))
   (completion-category-defaults nil) ;; No specific categories have special completion styles by default
-;;  (completion-category-overrides '((file (styles)))) ;; Allow partial-completion for file paths
+  ;;  (completion-category-overrides '((file (styles)))) ;; Allow partial-completion for file paths
   :config
   (setq orderless-matching-styles '(orderless-literal-prefix
 									orderless-literal
@@ -129,12 +147,12 @@
 ;;   :bind (:map minibuffer-local-map
 ;;          ("M-A" . marginalia-cycle))
 
-  ;; The :init section is always executed.
+;; The :init section is always executed.
 ;;  :init
 
-  ;; Marginalia must be activated in the :init section of use-package such that
-  ;; the mode gets enabled right away. Note that this forces loading the
-  ;; package.
+;; Marginalia must be activated in the :init section of use-package such that
+;; the mode gets enabled right away. Note that this forces loading the
+;; package.
 ;;  (marginalia-mode))
 
 
@@ -182,17 +200,17 @@
   (sp-local-pair '(python-mode) "f'" "'")
 
   (add-hook 'python-mode-hook #'smartparens-mode)
-(add-hook 'LaTeX-mode-hook #'smartparens-mode)
-(add-hook 'plain-tex-mode #'smartparens-mode)
-)
+  (add-hook 'LaTeX-mode-hook #'smartparens-mode)
+  (add-hook 'plain-tex-mode #'smartparens-mode)
+  )
 
 (use-package hydra
   :ensure t
   :config
   (defhydra hydra-move-line (global-map "C-c")
-  "move-line"
-  ("i" move-line-up "up")
-  ("o" move-line-down "down"))
+	"move-line"
+	("i" move-line-up "up")
+	("o" move-line-down "down"))
   
   )
 
@@ -200,33 +218,33 @@
   :ensure t
   :config
   (defhydra hydra-multiple-cursors (global-map "C-c )")
-  "
+	"
  Up^^             Down^^           Miscellaneous           % 2(mc/num-cursors) cursor%s(if (> (mc/num-cursors) 1) \"s\" \"\")
 ------------------------------------------------------------------
  [_p_]   Next     [_n_]   Next     [_l_] Edit lines  [_0_] Insert numbers
  [_P_]   Skip     [_N_]   Skip     [_a_] Mark all    [_A_] Insert letters
  [_M-p_] Unmark   [_M-n_] Unmark   [_s_] Search      [_q_] Quit
  [_|_] Align with input CHAR       [Click] Cursor at point"
-  ("l" mc/edit-lines :exit t)
-  ("a" mc/mark-all-like-this :exit t)
-  ("n" mc/mark-next-like-this)
-  ("N" mc/skip-to-next-like-this)
-  ("M-n" mc/unmark-next-like-this)
-  ("p" mc/mark-previous-like-this)
-  ("P" mc/skip-to-previous-like-this)
-  ("M-p" mc/unmark-previous-like-this)
-  ("|" mc/vertical-align)
-  ("s" mc/mark-all-in-region-regexp :exit t)
-  ("0" mc/insert-numbers :exit t)
-  ("A" mc/insert-letters :exit t)
-  ("<mouse-1>" mc/add-cursor-on-click)
-  ;; Help with click recognition in this hydra
-  ("<down-mouse-1>" ignore)
-  ("<drag-mouse-1>" ignore)
-  ("C-n" mc/mark-next-lines)
-  ("C-p" mc/mark-previous-lines)
-  ("q" nil))
-)
+	("l" mc/edit-lines :exit t)
+	("a" mc/mark-all-like-this :exit t)
+	("n" mc/mark-next-like-this)
+	("N" mc/skip-to-next-like-this)
+	("M-n" mc/unmark-next-like-this)
+	("p" mc/mark-previous-like-this)
+	("P" mc/skip-to-previous-like-this)
+	("M-p" mc/unmark-previous-like-this)
+	("|" mc/vertical-align)
+	("s" mc/mark-all-in-region-regexp :exit t)
+	("0" mc/insert-numbers :exit t)
+	("A" mc/insert-letters :exit t)
+	("<mouse-1>" mc/add-cursor-on-click)
+	;; Help with click recognition in this hydra
+	("<down-mouse-1>" ignore)
+	("<drag-mouse-1>" ignore)
+	("C-n" mc/mark-next-lines)
+	("C-p" mc/mark-previous-lines)
+	("q" nil))
+  )
 
 (use-package ace-window
   :ensure t
@@ -290,32 +308,32 @@
   )
 
 
-(use-package copilot
-  :vc (:url "https://github.com/copilot-emacs/copilot.el"
-            :rev :newest
-            :branch "main")
-  :config
-  (add-hook 'prog-mode-hook 'copilot-mode)
-  ;; Set the indentation level for different modes
-  ;; Clear list first
-  (setq copilot-indentation-alist nil)
-  (add-to-list 'copilot-indentation-alist '(python-mode 4))
-  (add-to-list 'copilot-indentation-alist '(prog-mode 4))
-  (add-to-list 'copilot-indentation-alist '(text-mode 2))
-  (add-to-list 'copilot-indentation-alist '(closure-mode 2))
-  (add-to-list 'copilot-indentation-alist '(emacs-lisp-mode 2))
-  )
+;;(use-package copilot
+;;  :vc (:url "https://github.com/copilot-emacs/copilot.el"
+;;            :rev :newest
+;;            :branch "main")
+;;  :config
+;;  (add-hook 'prog-mode-hook 'copilot-mode)
+;;  ;; Set the indentation level for different modes
+;;  ;; Clear list first
+;;  (setq copilot-indentation-alist nil)
+;;  (add-to-list 'copilot-indentation-alist '(python-mode 4))
+;;  (add-to-list 'copilot-indentation-alist '(prog-mode 4))
+;;  (add-to-list 'copilot-indentation-alist '(text-mode 2))
+;;  (add-to-list 'copilot-indentation-alist '(closure-mode 2))
+;;  (add-to-list 'copilot-indentation-alist '(emacs-lisp-mode 2))
+;;  )
 
 (use-package vterm
   :ensure t
   :config
   (add-hook 'vterm-mode-hook 'my/vterm-mode-customization)
   (with-eval-after-load 'vterm
-  (define-advice vterm-copy-mode (:after (&rest r) my-customize-vterm-copy-mode-line)
-    "Customize mode line when entering or exiting `vterm-copy-mode'."
-    (if vterm-copy-mode
-        (my/vterm-copy-mode-customization)
-      (my/vterm-mode-customization))))
+	(define-advice vterm-copy-mode (:after (&rest r) my-customize-vterm-copy-mode-line)
+      "Customize mode line when entering or exiting `vterm-copy-mode'."
+      (if vterm-copy-mode
+          (my/vterm-copy-mode-customization)
+		(my/vterm-mode-customization))))
   )
 
 
@@ -344,15 +362,15 @@
   :hook (
          ;; Replace individual mode hooks with a general programming mode hook
          (prog-mode . (lambda ()
-                       (when (my/should-enable-lsp)
-                         (lsp))))
+						(when (my/should-enable-lsp)
+                          (lsp))))
          (lsp-mode . lsp-enable-which-key-integration))
   :commands lsp
   :config
   (setq lsp-headerline-breadcrumb-enable nil)
   ;; Add this to prevent LSP from trying to work on remote files
   (add-to-list 'lsp-disabled-clients '(python-ls . ((lambda (ws) 
-                                                     (file-remote-p (buffer-file-name)))))))
+                                                      (file-remote-p (buffer-file-name)))))))
 
 ;; optionally
 (use-package lsp-ui :commands lsp-ui-mode)
@@ -375,9 +393,10 @@
   :defer t
   :diminish
   :config
-  (setenv "WORKON_HOME" "/Users/joelsobolmark/dev/emacs_pyvenvs")
+  (setenv "WORKON_HOME" "/Users/maxsobolmark/dev/emacs_pyvenvs")
   (setq pyvenv-mode-line-indicator '(pyvenv-virtual-env-name ("[venv:" pyvenv-virtual-env-name "] ")))
   (pyvenv-mode t)
+  (pyvenv-workon 'python312)
   )
 
 (use-package unison-sync-mode
@@ -404,3 +423,15 @@
 
   ;; Add more language-specific configurations as needed
   )
+
+(use-package diff-hl
+  :ensure t)
+
+(use-package async
+  :ensure t)
+
+(use-package doom-themes
+  :ensure t)
+
+(use-package swiper
+  :ensure t)
