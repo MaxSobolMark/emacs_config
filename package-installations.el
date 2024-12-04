@@ -8,6 +8,7 @@
 
 (use-package consult
   ;; Replace bindings. Lazily loaded by `use-package'.
+  :ensure t
   :bind (
          ("C-<tab>" . consult-buffer)
          ("C-x b" . consult-buffer)                ;; orig. switch-to-buffer
@@ -35,8 +36,8 @@
          ;; M-s bindings in `search-map'
          ("M-s d" . consult-find)                  ;; Alternative: consult-fd
          ("M-s c" . consult-locate)
-         ("M-s g" . consult-grep)
-         ("M-s G" . consult-git-grep)
+         ;; ("M-s g" . consult-grep)
+         ("M-s g" . consult-git-grep)
          ("M-s r" . consult-ripgrep)
          ("C-s" . consult-line)
          ("C-S" . consult-line)
@@ -84,7 +85,8 @@
    consult--source-bookmark consult--source-file-register
    consult--source-recent-file consult--source-project-recent-file
    ;; :preview-key "M-."
-   :preview-key '(:debounce 0.4 any))
+   :preview-key '(:debounce 0.4 any)
+   )
 
   ;; Disable previews for file-related sources in consult-buffer
   (consult-customize
@@ -96,20 +98,20 @@
    :preview-key "M-.")
 
   ;; Add center-on-candidate functionality to consult-line
-  (defun my/consult-line-center ()
-    "Center the current candidate line in the buffer."
-    (interactive)
-    (let ((candidate (car (consult--lookup-candidate))))
-      (when candidate
-        (with-selected-window (consult--get-window)
-          (goto-char candidate)
-          (recenter)))))
+  ;; (defun my/consult-line-center ()
+  ;;   "Center the current candidate line in the buffer."
+  ;;   (interactive)
+  ;;   (let ((candidate (car (consult--lookup-candidate))))
+  ;;     (when candidate
+  ;;       (with-selected-window (consult--get-window)
+  ;;         (goto-char candidate)
+  ;;         (recenter)))))
 
-  (consult-customize
-   consult-line
-   :add-history (list #'my/consult-line-center)
-   :preview-key (append consult-preview-key
-                        (list (kbd "C-l") #'my/consult-line-center)))
+  ;; (consult-customize
+  ;;  consult-line
+  ;;  :add-history (list #'my/consult-line-center)
+  ;;  :preview-key (append consult-preview-key
+  ;;                       (list (kbd "C-l") #'my/consult-line-center)))
 
   ;; Optionally configure the narrowing key.
   ;; Both < and C-+ work reasonably well.
@@ -118,6 +120,13 @@
   ;; Optionally make narrowing help available in the minibuffer.
   ;; You may want to use `embark-prefix-help-command' or which-key instead.
   ;; (keymap-set consult-narrow-map (concat consult-narrow-key " ?") #'consult-narrow-help)
+  )
+
+(use-package wgrep
+  :ensure t
+  :config
+  (setq wgrep-auto-save-buffer t)
+  (setq wgrep-enable-key "e")
   )
 
 (use-package orderless
@@ -139,28 +148,29 @@
   (savehist-mode))
 
 
-;; ;; Enable rich annotations using the Marginalia package
-;; (use-package marginalia
-;;   ;; Bind `marginalia-cycle' locally in the minibuffer.  To make the binding
-;;   ;; available in the *Completions* buffer, add it to the
-;;   ;; `completion-list-mode-map'.
-;;   :bind (:map minibuffer-local-map
-;;          ("M-A" . marginalia-cycle))
+;; Enable rich annotations using the Marginalia package
+(use-package marginalia
+  ;; Bind `marginalia-cycle' locally in the minibuffer.  To make the binding
+  ;; available in the *Completions* buffer, add it to the
+  ;; `completion-list-mode-map'.
+  :bind (:map minibuffer-local-map
+			  ("M-A" . marginalia-cycle))
 
-;; The :init section is always executed.
-;;  :init
+  ;; The :init section is always executed.
+  :init
 
-;; Marginalia must be activated in the :init section of use-package such that
-;; the mode gets enabled right away. Note that this forces loading the
-;; package.
-;;  (marginalia-mode))
+  ;; Marginalia must be activated in the :init section of use-package such that
+  ;; the mode gets enabled right away. Note that this forces loading the
+  ;; package.
+  (marginalia-mode))
 
 
 (use-package embark
   :ensure t
 
   :bind
-  (("C-." . embark-act)         ;; pick some comfortable binding
+  ;; (("C-." . embark-act)         ;; pick some comfortable binding
+  (("C-\"" . embark-act)         ;; pick some comfortable binding
    ("C-;" . embark-dwim)        ;; good alternative: M-.
    ("C-h B" . embark-bindings)) ;; alternative for `describe-bindings'
 
@@ -307,22 +317,21 @@
   (diminish 'visual-line-mode)
   )
 
+(use-package exec-path-from-shell
+  :ensure t
+  :config
+  (exec-path-from-shell-initialize)
+  )
 
-;;(use-package copilot
-;;  :vc (:url "https://github.com/copilot-emacs/copilot.el"
-;;            :rev :newest
-;;            :branch "main")
-;;  :config
-;;  (add-hook 'prog-mode-hook 'copilot-mode)
-;;  ;; Set the indentation level for different modes
-;;  ;; Clear list first
-;;  (setq copilot-indentation-alist nil)
-;;  (add-to-list 'copilot-indentation-alist '(python-mode 4))
-;;  (add-to-list 'copilot-indentation-alist '(prog-mode 4))
-;;  (add-to-list 'copilot-indentation-alist '(text-mode 2))
-;;  (add-to-list 'copilot-indentation-alist '(closure-mode 2))
-;;  (add-to-list 'copilot-indentation-alist '(emacs-lisp-mode 2))
-;;  )
+(use-package copilot
+  :vc (:url "https://github.com/copilot-emacs/copilot.el"
+			:rev :newest
+			:branch "main")
+  :config
+  (add-hook 'prog-mode-hook 'copilot-mode)
+  (add-to-list 'copilot-major-mode-alist '("python-ts-mode" . "python"))
+  (add-to-list 'copilot-indentation-alist '(prog-mode 2))
+  )
 
 (use-package vterm
   :ensure t
@@ -344,12 +353,6 @@
 ;; (use-package forge
 ;; :after magit)
 
-(use-package exec-path-from-shell
-  :ensure t
-  :config
-  (exec-path-from-shell-initialize)
-  )
-
 (use-package lsp-mode
   :init
   (setq lsp-keymap-prefix "C-'")
@@ -357,20 +360,29 @@
   (setq lsp-file-watch-threshold nil)
   (setq lsp-enable-file-watchers nil)
   (defun my/should-enable-lsp ()
-    "Return t if LSP should be enabled for current buffer."
-    (not (file-remote-p default-directory)))
+	"Return t if LSP should be enabled for the current buffer."
+	(and (not (file-remote-p default-directory))
+		 (or (derived-mode-p 'python-mode)
+			 (derived-mode-p 'python-ts-mode))))
   :hook (
          ;; Replace individual mode hooks with a general programming mode hook
          (prog-mode . (lambda ()
-						(when (my/should-enable-lsp)
-                          (lsp))))
+						;; (when (my/should-enable-lsp)
+                        ;;   (lsp))
+						(lsp)
+						))
          (lsp-mode . lsp-enable-which-key-integration))
   :commands lsp
   :config
   (setq lsp-headerline-breadcrumb-enable nil)
   ;; Add this to prevent LSP from trying to work on remote files
   (add-to-list 'lsp-disabled-clients '(python-ls . ((lambda (ws) 
-                                                      (file-remote-p (buffer-file-name)))))))
+                                                      (file-remote-p (buffer-file-name))))))
+  ;; Bindings for LSP
+  (define-key lsp-mode-map (kbd "C-' C-'") #'lsp-next-reference)
+  
+
+  )
 
 ;; optionally
 (use-package lsp-ui :commands lsp-ui-mode)
@@ -411,15 +423,15 @@
   :config
   (apheleia-global-mode +1)
   
-  ;; Configure formatters for different languages
-  (setq apheleia-formatters
-        '((python-mode . "black")
-          (js-mode . "prettier")
-          (css-mode . "prettier")
-          (html-mode . "prettier")
-          (json-mode . "prettier")
-          (typescript-mode . "prettier")
-          (rust-mode . "rustfmt")))
+  ;; ;; Configure formatters for different languages
+  ;; (setq apheleia-formatters
+  ;;       '((python-mode . "black")
+  ;;         (js-mode . "prettier")
+  ;;         (css-mode . "prettier")
+  ;;         (html-mode . "prettier")
+  ;;         (json-mode . "prettier")
+  ;;         (typescript-mode . "prettier")
+  ;;         (rust-mode . "rustfmt")))
 
   ;; Add more language-specific configurations as needed
   )
@@ -435,3 +447,7 @@
 
 (use-package swiper
   :ensure t)
+
+(use-package copilot-chat)
+
+(use-package ztree)

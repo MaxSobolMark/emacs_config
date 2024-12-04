@@ -65,7 +65,7 @@
   (interactive "P")
   (if prefix
       (find-file "/ssh:sc.stanford.edu:/iris/u/maxsobolmark/mebatch/mebatch_history.txt")
-    (find-file "/ssh:babel:~/mebatch/mebatch/mebatch_history.txt")
+    (find-file "/ssh:babel:~/mebatch/mebatch_history.txt")
     )
   )
 (defun bashrc ()
@@ -288,9 +288,13 @@ With prefix arg, include the remote path for tramp buffers."
   (if (get-buffer "*ws18-vterm*")
       (switch-to-buffer "*ws18-vterm*")
     (progn
-      (find-file "/ssh:iris-ws-18.stanford.edu:/iris/u/maxsobolmark")
-      (vterm "/ssh:iris-ws-18.stanford.edu:/iris/u/maxsobolmark/")
+      ;; (find-file "/ssh:iris-ws-18.stanford.edu:/iris/u/maxsobolmark")
+      ;; (vterm "/ssh:iris-ws-18.stanford.edu:/iris/u/maxsobolmark/")
+	  (find-file "~")
+	  (vterm "~/")
       (rename-buffer "*ws18-vterm*")
+	  (vterm-send-string "ssh iris-ws-18.stanford.edu")
+	  (vterm-send-return)
       )
     )
   )
@@ -439,16 +443,42 @@ With prefix arg, include the remote path for tramp buffers."
   "Open a vterm in a selected Google Cloud TPU instance."
   (interactive)
   (let* ((v4-tpus (mapcar (lambda (n) (format "v4-tpu-%d-z" n)) (number-sequence 0 7)))
-		 (v5e-tpus (mapcar (lambda (n) (format "v5e-tpu-16-%d" n)) (number-sequence 0 7)))
-		 (tpu-options (append v4-tpus v5e-tpus))
-		 (selected-tpu (consult--read
-						tpu-options
-						:prompt "Select TPU: "
-						:category 'tpu))
-		 (ssh-method (if (string-prefix-p "v5e" selected-tpu) "gcsshv5" "gcssh"))
-		 (file-path (concat "/" ssh-method ":" selected-tpu ":/home/maxsobolmark/")))
-	(find-file file-path)
-	(vterm file-path)
-	(rename-buffer (concat "*vterm-" selected-tpu "*"))
-	)
+         (v5e-tpus (mapcar (lambda (n) (format "v5e-tpu-16-%d" n)) (number-sequence 0 7)))
+         (tpu-options (append v4-tpus v5e-tpus))
+         (selected-tpu (consult--read
+                        tpu-options
+                        :prompt "Select TPU: "
+                        :category 'tpu))
+         (ssh-method (if (string-prefix-p "v5e" selected-tpu) "gcsshv5" "gcssh"))
+         (file-path (concat "/" ssh-method ":" selected-tpu ":/home/maxsobolmark/"))
+         (buffer-name (concat "*vterm-" selected-tpu "*")))
+    (if (get-buffer buffer-name)
+        (switch-to-buffer buffer-name)
+      (find-file "~")
+      (vterm "~/")
+      (rename-buffer buffer-name)
+      ;; Extract TPU index from selected-tpu
+      (let* ((cleaned-tpu (replace-regexp-in-string "-z$" "" selected-tpu))
+             (tpu-index (string-to-number (car (last (split-string cleaned-tpu "-"))))))
+        (message "Connecting to TPU %d" tpu-index)
+        (vterm-send-string (if (string-prefix-p "v4" cleaned-tpu)
+                               (format "tpuconnectv4 %d" tpu-index)
+                             (format "tpuconnectv5 %d" tpu-index)))
+        (vterm-send-return)))))
+
+(defun lsp-next-reference (&optional prefix)
+  "Go to the next (previous) reference in the current buffer using lsp-ui-find-next-reference."
+  (interactive "P")
+  (if prefix
+	  (lsp-ui-find-prev-reference)
+	(lsp-ui-find-next-reference))
   )
+
+(defun select-whole-sexp ()
+  "Select the entire S-expression at or before point."
+  (interactive)
+  (beginning-of-thing 'sexp)
+  (set-mark (point))
+  (end-of-thing 'sexp)
+  )
+

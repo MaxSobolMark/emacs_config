@@ -36,6 +36,9 @@
  '(avy-enter-times-out nil)
  '(avy-timeout-seconds 0.2)
  '(cdlatex-paired-parens "$[{(")
+ '(consult-line-start-from-top nil)
+ '(consult-preview-key 'any)
+ '(consult-project-function nil)
  '(copilot-node-executable "/opt/homebrew/bin/node")
  '(custom-safe-themes
    '("aec7b55f2a13307a55517fdf08438863d694550565dee23181d2ebd973ebd6b8"
@@ -77,20 +80,19 @@
 				 "Transparent" :html-scale 1.0 :matchers ("begin" "$1" "$" "$$" "\\(" "\\[")))
  '(org-image-actual-width nil)
  '(package-selected-packages
-   '(add-node-modules-path apheleia auctex-latexmk bash-completion cdlatex company-auctex company-jedi
-						   consult-lsp copilot corfu counsel-tramp dap-mode dashboard diff-hl
-						   diminish doom-themes ein el-get elpy embark-consult exec-path-from-shell
-						   flycheck forge gcmh helm-dash jedi latex-preview-pane lsp-ui marginalia
-						   multiple-cursors orderless org-roam pdf-tools prettier-js projectile
-						   request-deferred restart-emacs slack smart-hungry-delete smartparens
-						   tree-sitter-langs undo-tree unfill unison-sync-mode vertico vterm
-						   yaml-mode ztree))
+   '(company-jedi consult consult-lsp copilot corfu counsel-tramp dap-mode dashboard diff-hl diminish
+				  doom-themes ein el-get elpy embark embark-consult exec-path-from-shell flycheck
+				  forge gcmh helm-dash hydra jedi latex-preview-pane lsp-mode lsp-ui magit
+				  marginalia multiple-cursors orderless org-roam pdf-tools prettier-js projectile
+				  pyvenv request-deferred restart-emacs slack smart-hungry-delete smartparens
+				  tree-sitter-langs undo-tree unfill unison-sync-mode vertico vterm yaml-mode ztree))
  '(package-vc-selected-packages
    '((unison-sync-mode :url "https://github.com/jsigman/unison-sync-mode.git" :branch "main")
 	 (copilot :url "https://github.com/copilot-emacs/copilot.el" :branch "main")))
  '(pdf-latex-command "lualatex")
  '(prettify-symbols-unprettify-at-point 'right-edge)
  '(project-vc-merge-submodules nil)
+ '(python-forward-sexp-function nil)
  '(remote-file-name-inhibit-cache nil)
  '(remote-file-name-inhibit-locks t)
  '(scroll-conservatively 101)
@@ -98,7 +100,7 @@
  '(shell-escape-mode "-shell-escape")
  '(shell-file-name "/bin/zsh")
  '(tab-width 4)
- '(tramp-auto-save-directory "/Users/joelsobolmark/.emacs.d/backup_files/")
+ '(tramp-auto-save-directory "/Users/maxsobolmark/.emacs.d/backup_files/")
  '(tramp-connection-timeout 25)
  '(tramp-remote-path
    '(tramp-default-remote-path "/bin" "/usr/bin" "/sbin" "/usr/sbin" "/usr/local/bin" "/usr/local/sbin"

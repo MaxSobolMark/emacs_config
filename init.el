@@ -19,7 +19,7 @@
 ;; (load "~/.emacs.d/packages/mebatch-mode.el")
 (load "~/.emacs.d/packages/ediff-trees.el")
 (setq ztree-diff-filter-list '("^\\." ".?\.pyc$" ".?pycache.?"))
-;; (load "~/.emacs.d/packages/consult-patch.el")
+(load "~/.emacs.d/packages/consult-patch.el")
 
 
 
@@ -39,7 +39,17 @@
 (global-visual-line-mode t)
 
 
-(add-hook 'python-mode-hook #'auto-fill-mode)
+(add-hook 'python-ts-mode-hook
+		  (lambda ()
+			;; Activate auto-fill-mode.
+			(auto-fill-mode -1)
+			(setq tab-width 4)
+			(setq python-indent-offset 4)
+
+			)
+		  )
+;; Apply python-mode-hook to python-ts-mode
+
 (setq-default fill-column 100)
 (setq create-lockfiles nil)
 
@@ -271,3 +281,6 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(default ((t (:inherit nil :extend nil :stipple nil :background "black" :foreground "#d4d4d4" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 120 :width normal :foundry "nil" :family "Menlo")))))
+
+;; Disable pinch universally
+(global-set-key [pinch] 'ignore)
