@@ -81,7 +81,8 @@
 (define-key vterm-mode-map (kbd "C-g") 'vterm-copy-mode)
 (define-key vterm-copy-mode-map (kbd "C-g") 'vterm-copy-mode-done)
 (define-key vterm-mode-map (kbd "C-q") 'vterm-send-next-key)
-(global-set-key (kbd "<f7>") 'vterm-shortcut)
+;; (global-set-key (kbd "<f7>") 'vterm-shortcut)
+(global-set-key (kbd "<f7>") 'vterm-to-computer)
 ;; Remove <f1> through <f12> and escape from vterm-mode-map
 (define-key vterm-mode-map (kbd "<f1>") nil)
 (define-key vterm-mode-map (kbd "<f2>") nil)

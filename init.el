@@ -20,6 +20,7 @@
 (load "~/.emacs.d/packages/ediff-trees.el")
 (setq ztree-diff-filter-list '("^\\." ".?\.pyc$" ".?pycache.?"))
 (load "~/.emacs.d/packages/consult-patch.el")
+(load "~/.emacs.d/ssh-vterm.el")
 
 
 

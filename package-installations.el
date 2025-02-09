@@ -330,7 +330,11 @@
   :config
   (add-hook 'prog-mode-hook 'copilot-mode)
   (add-to-list 'copilot-major-mode-alist '("python-ts-mode" . "python"))
-  (add-to-list 'copilot-indentation-alist '(prog-mode 2))
+  (add-to-list 'copilot-major-mode-alist '("ELisp/d" . "elisp"))
+  (add-to-list 'copilot-major-mode-alist '("emacs-lisp-mode" . "elisp"))
+  (add-to-list 'copilot-major-mode-alist '("lisp-interaction-mode" . "elisp"))
+  (add-to-list 'copilot-indentation-alist '(prog-mode . 2))
+  (add-to-list 'copilot-indentation-alist '(text-mode . 2))
   )
 
 (use-package vterm
@@ -366,11 +370,11 @@
 			 (derived-mode-p 'python-ts-mode))))
   :hook (
          ;; Replace individual mode hooks with a general programming mode hook
-         (prog-mode . (lambda ()
-						;; (when (my/should-enable-lsp)
-                        ;;   (lsp))
-						(lsp)
-						))
+         (python-ts-mode . (lambda ()
+							 (when (my/should-enable-lsp)
+							   (lsp))
+							 ;; (lsp)
+							 ))
          (lsp-mode . lsp-enable-which-key-integration))
   :commands lsp
   :config
@@ -408,7 +412,9 @@
   (setenv "WORKON_HOME" "/Users/maxsobolmark/dev/emacs_pyvenvs")
   (setq pyvenv-mode-line-indicator '(pyvenv-virtual-env-name ("[venv:" pyvenv-virtual-env-name "] ")))
   (pyvenv-mode t)
-  (pyvenv-workon 'python312)
+  (setq pyvenv-default-virtual-env-name "python312")
+  :init
+  (pyvenv-activate "/Users/maxsobolmark/dev/emacs_pyvenvs/python312")
   )
 
 (use-package unison-sync-mode
@@ -451,3 +457,48 @@
 (use-package copilot-chat)
 
 (use-package ztree)
+
+(use-package web-mode
+  :ensure t
+  :mode
+  (("\\.phtml\\'" . web-mode)
+   ("\\.php\\'" . web-mode)
+   ("\\.tpl\\'" . web-mode)
+   ("\\.[agj]sp\\'" . web-mode)
+   ("\\.as[cp]x\\'" . web-mode)
+   ("\\.erb\\'" . web-mode)
+   ("\\.mustache\\'" . web-mode)
+   ("\\.djhtml\\'" . web-mode)))
+
+(use-package auctex
+  :ensure t
+  :defer t
+  :config
+  ;; Enable PDF mode by default
+  (setq TeX-PDF-mode t)
+
+  ;; Enable RefTeX mode for cross-referencing
+  (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
+
+  ;; Use modern TeX engines by default
+  (setq TeX-engine 'luatex)
+
+  ;; Automatically parse documents for preview
+  (setq TeX-auto-save t)
+  (setq TeX-parse-self t)
+
+  ;; Set up preview-latex for inline images
+  (setq preview-scale-function 1.3)
+
+  ;; Use a more sophisticated compilation process
+  (setq TeX-command-extra-options "-shell-escape")
+  (setq TeX-save-query nil)
+  (setq TeX-show-compilation t))
+
+(use-package latex-preview-pane
+  :ensure t
+  :config
+  (latex-preview-pane-enable)
+  )
+
+(use-package yaml-mode)

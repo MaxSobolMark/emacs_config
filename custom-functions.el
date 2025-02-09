@@ -42,7 +42,8 @@
   )
 (defun sshws ()
   (interactive)
-  (find-file "/ssh:iris-ws-10.stanford.edu:/iris/u/maxsobolmark"))
+  (find-file "/ssh:workstation:/home/max")
+  )
 (defun sshws18 ()
   (interactive)
   (find-file "/ssh:iris-ws-18.stanford.edu:/iris/u/maxsobolmark"))
@@ -64,13 +65,14 @@
 (defun mebatch-history (&optional prefix)
   (interactive "P")
   (if prefix
-      (find-file "/ssh:sc.stanford.edu:/iris/u/maxsobolmark/mebatch/mebatch_history.txt")
+      ;; (find-file "/ssh:sc.stanford.edu:/iris/u/maxsobolmark/mebatch/mebatch_history.txt")
+      (find-file "~/dev/mebatch/mebatch_history.txt")
     (find-file "/ssh:babel:~/mebatch/mebatch_history.txt")
     )
   )
 (defun bashrc ()
   (interactive)
-  (find-file "/ssh:sc.stanford.edu:~/.bashrc")
+  (find-file "/ssh:babel:~/bashrc_max")
   )
 
 (defun my-insert-before-line ()
@@ -436,7 +438,7 @@ With prefix arg, include the remote path for tramp buffers."
                         :prompt "Select TPU: "
                         :category 'tpu))
          (ssh-method (if (string-prefix-p "v5e" selected-tpu) "gcsshv5" "gcssh"))
-         (file-path (concat "/" ssh-method ":" selected-tpu ":/home/maxsobolmark/")))
+         (file-path (concat "/" ssh-method ":" selected-tpu ":/nfs/aidm_nfs/max/")))
     (find-file file-path)))
 
 (defun tpu-vterm ()

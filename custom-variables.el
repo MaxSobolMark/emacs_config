@@ -39,6 +39,7 @@
  '(consult-line-start-from-top nil)
  '(consult-preview-key 'any)
  '(consult-project-function nil)
+ '(copilot-max-char-warning-disable t)
  '(copilot-node-executable "/opt/homebrew/bin/node")
  '(custom-safe-themes
    '("aec7b55f2a13307a55517fdf08438863d694550565dee23181d2ebd973ebd6b8"
@@ -72,6 +73,8 @@
  '(jdee-db-active-breakpoint-face-colors (cons "#073642" "#268bd2"))
  '(jdee-db-requested-breakpoint-face-colors (cons "#073642" "#859900"))
  '(jdee-db-spec-breakpoint-face-colors (cons "#073642" "#56697A"))
+ '(lsp-pylsp-server-command
+   '("/Users/maxsobolmark/dev/emacs_pyvenvs/python312/bin/pylsp"))
  '(magit-diff-highlight-trailing nil)
  '(make-backup-files nil)
  '(ns-right-alternate-modifier 'control)
